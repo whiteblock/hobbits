@@ -28,4 +28,10 @@ EWP 0.1 HELLO deflate,gzip,snappy 0 1234
 # Response
 200 deflate 0 0
 
+# Request (no compression, bson headers, bson body)
+EWP 0.1 HELLO none 321 1234
+<321 bytes of binary bson body data>
+<1234 bytes of binary bson body data>
+# Response
+200 none 0 0
 ```
