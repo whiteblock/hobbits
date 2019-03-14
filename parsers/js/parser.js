@@ -14,7 +14,7 @@ function parse(req) {
         version: r[1],
         command: r[2],
         compression: r[3],
-        responseCompression: r[4],
+        responseCompression: r[4].split(','),
         headOnlyIndicator: r[7] === 'H',
         headers,
         body
