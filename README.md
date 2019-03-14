@@ -24,7 +24,7 @@ EWP 0.1 PING snappy,gzip,deflate 0 0
 ```
 # Request (empty headers, bson body)
 EWP 0.1 HELLO deflate,gzip,snappy 0 1234
-<1234 bytes of binary bson body data>
+<1234 bytes of deflate compressed binary bson body data>
 # Response
 200 deflate 0 0
 
