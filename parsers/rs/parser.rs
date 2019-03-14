@@ -27,7 +27,7 @@ impl EWPRequest {
             version: "0.1".to_string(),
             command: r[2].clone(),
             compression: r[3].clone(),
-            response_compression: req_line.split(|chr| chr == ',').map(|s| s.to_string()).collect(),
+            response_compression: r[4].split(|chr| chr == ',').map(|s| s.to_string()).collect(),
             head_only_indicator: r.get(7) == Some(&"H".to_string()),
             headers: payload[0..headers_len].to_vec(),
             body: payload[headers_len..body_len].to_vec(),
