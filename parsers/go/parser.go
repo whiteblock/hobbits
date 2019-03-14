@@ -17,7 +17,7 @@ type Request struct {
 	body                []byte
 }
 
-func parse(req string) []string {
+func parse(req string) Request {
 	res := strings.Split(req, "\n")
 
 	reqLine := res[0]
@@ -43,12 +43,10 @@ func parse(req string) []string {
 		body:                []byte(body),
 	}
 
-	fmt.Println(request)
-
-	return res
+	return request
 }
 
 func main() {
 	example_ping_req := "EWP 0.1 PING none none 0 5\n12345"
-	parse(example_ping_req)
+	fmt.Println(parse(example_ping_req))
 }
