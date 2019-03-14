@@ -6,12 +6,12 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 
 ## 0.1 EWP (Ethereum Wire Protocol)
 #### command
-any uppercase letters and _ to describe the command
+may contain any uppercase letter or digit or _  to describe the command
 
 #### compression preference
-list of supported compression codecs for the response in order from most preferred to least preferred separated by commas and all lowercase letters
+the first preference field is describing the compression codec of the request headers & body in all lowercase letters or digits or _
 
-the first item in the preference list is assumed to be the request header and body compression codec
+the second preference field is the list of supported compression codecs for the response in order from most preferred to least preferred separated by commas and preferences in all lowercase letters or digits or _
 
 none can be specified to indicate no compression is to be used on the header or body data.
 
@@ -25,7 +25,7 @@ example of a wire protocol message
 #### ping
 ```
 # Request (empty headers and body)
-EWP 0.1 PING none 0 0
+EWP 0.1 PING none none 0 0
 
 # Response
 200 none 0 0
@@ -35,13 +35,15 @@ EWP 0.1 PING none 0 0
 #### hello
 ```
 # Request (empty headers, bson body)
-EWP 0.1 HELLO deflate,gzip,snappy 0 1234
+EWP 0.1 HELLO deflate gzip,snappy 0 1234
 <1234 bytes of deflate compressed binary bson body data>
 # Response
-200 deflate 0 0
+200 gzip 321 1234
+<321 bytes of gzip compressed binary bson body data>
+<1234 bytes of gzip compressed binary bson body data>
 
 # Request (no compression, bson headers, bson body)
-EWP 0.1 HELLO none 321 1234
+EWP 0.1 HELLO none none 321 1234
 <321 bytes of binary bson body data>
 <1234 bytes of binary bson body data>
 # Response

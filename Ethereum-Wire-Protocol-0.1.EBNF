@@ -1,7 +1,7 @@
 request = request-line, lf, headers, body ;
 response = response-line, lf, headers, body ;
 
-request-line = magic , sp , version , sp , command , sp , compression-preferences , sp , headers-len , sp , body-len ;
+request-line = magic , sp , version , sp , command , sp , compression-preference, compression-preferences , sp , headers-len , sp , body-len ;
 
 response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len ;
 
@@ -24,7 +24,8 @@ lf = "\n" ;
 command-character = uppercase-letter | digit | "_" ;
 command = command-character , { command-character } ;
 
-compression-preference = lowercase-letter , { lowercase-letter } ;
+compression-preference-character = lowercase-letter | digit | "_" ;
+compression-preference = compression-preference-character , { compression-preference-character } ;
 compression-preferences = compression-preference , { ",", compression-preference } ;
 
 headers-len = digit , { digit } ;
