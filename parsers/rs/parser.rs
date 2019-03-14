@@ -2,17 +2,38 @@
 static EXAMPLE_PING_REQ: &[u8] = b"EWP 0.1 PING none none 0 5\n12345";
 
 #[derive(Clone,Debug)]
-struct EWPRequest {
-    version: String,
-    command: String,
-    compression: String,
-    response_compression: Vec<String>,
-    head_only_indicator: bool,
-    headers: Vec<u8>,
-    body: Vec<u8>
+pub struct EWPRequest {
+    pub version: String,
+    pub command: String,
+    pub compression: String,
+    pub response_compression: Vec<String>,
+    pub head_only_indicator: bool,
+    pub headers: Vec<u8>,
+    pub body: Vec<u8>
 }
+
+#[derive(Clone,Debug)]
+pub struct EWPResponse {
+    pub code: u16,
+    pub compression: String,
+    pub headers: Vec<u8>,
+    pub body: Vec<u8>
+}
+impl EWPResponse {
+    pub fn marshal(&self) -> Vec<u8> {
+        let mut rval = vec![];
+        let req_line = format!("{} {} {} {}\n", self.code, self.compression, self.headers.len(), self.body.len());
+
+        rval.extend(req_line.as_bytes());
+        rval.extend(&self.headers);
+        rval.extend(&self.body);
+
+        rval
+    }
+}
+
 impl EWPRequest {
-    fn parse(req: &[u8]) -> Result<Self, std::io::Error> {
+    pub fn parse(req: &[u8]) -> Result<Self, std::io::Error> {
         let parts: Vec< &[u8] > = req.splitn(2, |chr| chr == &('\n' as u8) ).collect();
         let req_line: String = String::from_utf8(parts[0].to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let r: Vec<String> = req_line.splitn(8, |chr| chr == ' ').map(|s| s.to_string()).collect();
