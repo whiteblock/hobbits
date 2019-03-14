@@ -9,7 +9,7 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 any uppercase letters and _ to describe the command
 
 #### compression preference
-list of preferred compression codecs for the response in order from most preferred to least preferred separated by commas and all lowercase letters
+list of supported compression codecs for the response in order from most preferred to least preferred separated by commas and all lowercase letters
 
 the first item in the preference list is assumed to be the request header and body compression codec
 
