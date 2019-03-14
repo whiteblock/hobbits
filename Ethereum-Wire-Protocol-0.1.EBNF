@@ -1,9 +1,9 @@
 request = request-line, lf, headers, body ;
-response = response-line, lf, headers, body ;
+response = response-line, lf, headers, [ body ] ;
 
-request-line = magic , sp , version , sp , command , sp , compression-preference, compression-preferences , sp , headers-len , sp , body-len ;
+request-line = magic , sp , version , sp , command , sp , compression-preference, compression-preferences , sp , headers-len , sp , body-len , [ sp , head-only-indicator ];
 
-response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len ;
+response-line = response-status , sp , compression-preference , sp , headers-len , [ sp , body-len ];
 
 response-status = digit , { digit } ;
 magic = 'EWP' ;
@@ -19,6 +19,7 @@ lowercase-letter = "a" | "b"
        | "x" | "y" | "z" ;
 digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 sp = " " ;
+head-only-indicator = "H" ;
 lf = "\n" ;
 
 command-character = uppercase-letter | digit | "_" ;
