@@ -3,9 +3,9 @@ response = response-line, lf, headers, body ;
 
 request-line = magic , sp , version , sp , command , sp , compression-preferences , sp , headers-len , sp , body-len ;
 
-response-status = digit , { digit } ;
 response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len ;
 
+response-status = digit , { digit } ;
 magic = 'EWP' ;
 version = '0.1' ;
 uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
