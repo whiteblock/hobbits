@@ -1,10 +1,10 @@
-request = request-line, lf, headers, body
-response = response-line, lf, headers, body
+request = request-line, lf, headers, body ;
+response = response-line, lf, headers, body ;
 
-request-line = magic , sp , version , sp , command , sp , compression-preferences , sp , headers-len , sp , body-len
+request-line = magic , sp , version , sp , command , sp , compression-preferences , sp , headers-len , sp , body-len ;
 
-response-status = digit , { digit }
-response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len
+response-status = digit , { digit } ;
+response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len ;
 
 magic = 'EWP' ;
 version = '0.1' ;
@@ -21,13 +21,13 @@ sp = " " ;
 lf = "\n" ;
 
 command-character = letter | digit | "_" ;
-command = command-character , { command-character }
+command = command-character , { command-character } ;
 
-compression-preference = letter , { letter }
-compression-preferences = compression-preference , { ",", compression-preference }
+compression-preference = letter , { letter } ;
+compression-preferences = compression-preference , { ",", compression-preference } ;
 
-headers-len = digit , { digit }
-body-len = digit , { digit }
+headers-len = digit , { digit } ;
+body-len = digit , { digit } ;
 
 headers = ? BSON ? ;
 body = ? BSON ? ;
