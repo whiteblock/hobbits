@@ -5,6 +5,15 @@
 Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
 
 ## 0.1 EWP (Ethereum Wire Protocol)
+#### command
+any uppercase letters and _ to describe the command
+
+#### compression preference
+list of preferred compression codecs for the response in order from most preferred to least preferred separated by commas and all lowercase letters
+
+the first item in the preference list is assumed to be the request header and body compression codec
+
+none can be specified to indicate no compression is to be used on the header or body data.
 
 ### examples
 
@@ -13,10 +22,10 @@ example of a wire protocol message
 #### ping
 ```
 # Request (empty headers and body)
-EWP 0.1 PING snappy,gzip,deflate 0 0
+EWP 0.1 PING none 0 0
 
 # Response
-200 snappy 0 0
+200 none 0 0
 
 ```
 
