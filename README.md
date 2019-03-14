@@ -7,14 +7,22 @@
 
 example of a wire protocol message
 
-#### request
+#### ping
 ```
+# Request (empty headers and body)
 EWP 0.1 PING snappy 0 0
-# Line Feed
+
+# Response
+200 snappy 0 0
+
 ```
 
-#### response
+#### hello
 ```
+# Request (empty headers, bson body)
+EWP 0.1 HELLO snappy 0 1234
+<1234 bytes of binary bson body data>
+# Response
 200 snappy 0 0
-# Line Feed
+
 ```
