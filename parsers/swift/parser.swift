@@ -1,5 +1,5 @@
 import Foundation
-  
+
 struct Request {
     let proto: String
     let version: String
