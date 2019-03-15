@@ -5,6 +5,34 @@
 Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
 
 ## 0.1 EWP (Ethereum Wire Protocol)
+
+#### types
+
+##### `request`
+
+```python
+{
+    'version': 'string',
+    'command': 'string',
+    'compression': 'string',
+    'response_compression': '[string]',
+    'head_only_indicator': 'bool',
+    'headers': 'bytes',
+    'body': 'bytes'
+}
+```
+
+##### `response`
+
+```python
+{
+    'code': 'uint16',
+    'compression': 'string',
+    'headers': 'bytes',
+    'body': 'bytes'
+}
+```
+
 #### command
 may contain any uppercase letter or digit or _  to describe the command
 
