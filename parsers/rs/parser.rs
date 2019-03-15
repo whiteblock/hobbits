@@ -12,25 +12,6 @@ pub struct EWPRequest {
     pub body: Vec<u8>
 }
 
-#[derive(Clone,Debug)]
-pub struct EWPResponse {
-    pub code: u16,
-    pub compression: String,
-    pub headers: Vec<u8>,
-    pub body: Vec<u8>
-}
-impl EWPResponse {
-    pub fn marshal(&self) -> Vec<u8> {
-        let mut rval = vec![];
-        let req_line = format!("{} {} {} {}\n", self.code, self.compression, self.headers.len(), self.body.len());
-
-        rval.extend(req_line.as_bytes());
-        rval.extend(&self.headers);
-        rval.extend(&self.body);
-
-        rval
-    }
-}
 
 impl EWPRequest {
     pub fn parse(req: &[u8]) -> Result<Self, std::io::Error> {
@@ -53,6 +34,53 @@ impl EWPRequest {
             headers: payload[0..headers_len].to_vec(),
             body: payload[headers_len..body_len].to_vec(),
         })
+    }
+    pub fn marshal(&self) -> Vec<u8> {
+        let response_compression = &self.response_compression.join(",");
+        let headers_len = self.headers.len().to_string();
+        let body_len = self.body.len().to_string();
+
+        let mut parts: Vec<&str> = vec![
+            "EWP",
+            &self.version,
+            &self.command,
+            &self.compression,
+            response_compression,
+            &headers_len,
+            &body_len
+        ];
+
+        if self.head_only_indicator {
+            parts.push("H")
+        }
+
+        let req_line = parts.join(" ") + "\n";
+
+        let mut rval = req_line.into_bytes();
+        rval.extend(&self.headers);
+        rval.extend(&self.body);
+
+        rval
+    }
+}
+
+#[derive(Clone,Debug)]
+pub struct EWPResponse {
+    pub code: u16,
+    pub compression: String,
+    pub headers: Vec<u8>,
+    pub body: Vec<u8>
+}
+impl EWPResponse {
+    pub fn marshal(&self) -> Vec<u8> {
+        let mut rval = vec![];
+        let req_line = format!("{} {} {} {}\n", self.code, self.compression, self.headers.len(), self.body.len());
+
+        rval.extend(req_line.as_bytes());
+        rval.extend(&self.headers);
+        rval.extend(&self.body);
+
+        rval
     }
 }
 
