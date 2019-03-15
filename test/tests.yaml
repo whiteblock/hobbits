@@ -4,7 +4,7 @@
     command: PING
     head-only: true
     compression: none
-    response-compression: none
+    response-compression: [ none ]
     # TODO:
     # headers:
     # body:
@@ -13,7 +13,7 @@
     command: PING
     head-only: false
     compression: none
-    response-compression: none
+    response-compression: [ none ]
     # TODO:
     # headers:
     # body:
