@@ -18,6 +18,18 @@ none can be specified to indicate no compression is to be used on the header or 
 #### headers and body
 headers and body are both BSON data payloads which are separately compressed and encoded -- the idea is to keep the headers lightweight so packets can be partially processed without having to decode the whole body in every case.
 
+#### missing languages
+  * brainfuck
+  * bash
+  * perl
+  * java
+  * x86 asm
+  * ruby
+  * ada
+  * c
+  * d
+  * css3
+ 
 ### examples
 
 example of a wire protocol message
