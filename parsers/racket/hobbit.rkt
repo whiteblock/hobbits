@@ -26,8 +26,12 @@
 
 
 (define (arr-to-string lst delim)
-  (if (equal? (length lst) 1) (car lst)
-      (string-append (string-append (car lst) delim) (arr-to-string (cdr lst) delim)))
+  (match (length lst)
+    [0 ""]
+    [1 (car lst)]
+    [ _
+      (string-append (string-append (car lst) delim) (arr-to-string (cdr lst) delim))]
+    )
 )
 
 (define (arr-merge arr spacer start end)

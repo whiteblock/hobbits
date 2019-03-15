@@ -1,9 +1,5 @@
-#lang racket
-(require "hobbit.rkt")
-;(require  (file "hobbit.rkt"))
-;(read-string 10)
-;(require racket/cmdline)
-;(read-line (current-input-port)
+#lang scheme
+(require "hobbit.scm")
 
 (let ([args (current-command-line-arguments)])
  (if (not (equal? (vector-length args) 2)) (display "No arguments given")
