@@ -2,3 +2,4 @@
 /parsers/cpp/test*
 /parsers/go/parser
 /parsers/rs/parser
+*.pyc
