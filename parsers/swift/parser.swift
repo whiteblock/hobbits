@@ -5,7 +5,7 @@ struct Request {
     let version: String
     let command: String
     let compression: String
-    let responseCompression: String
+    let responseCompression: [String]
     let headOnlyIndicator: Bool
     let headers: [UInt8]
     let body: [UInt8]
@@ -34,10 +34,10 @@ func parse(request: String) -> Request {
         version: String(r[1]),
         command: String(r[2]),
         compression: String(r[3]),
-        responseCompression: String(r[4]).split(separator: " "),
+        responseCompression: String(r[4]).split(separator: " ").map { return String($0) },
         headOnlyIndicator: String(r[7]) == "H",
-        headers: headers.utf8,
-        body: body.utf8
+        headers: [UInt8](headers.utf8),
+        body: [UInt8](body.utf8)
     )
 }
 
