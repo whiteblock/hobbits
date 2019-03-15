@@ -28,9 +28,17 @@ pushd rs
     rustc parser.rs
 popd
 
-pushd scheme
-    cf hobbit.scm
-popd
+#pushd scheme
+# Work in mothaf***ing progress
+#   mit-scheme --eval '
+#   (catch #t
+#     (lambda ()
+#       (cf "parser"))
+#     (lambda (key . parameters)
+#       ()))
+#   (quit)
+#   '
+#popd
 
 pushd swift
     swiftc parser.swift
