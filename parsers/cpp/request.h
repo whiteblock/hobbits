@@ -67,7 +67,7 @@ namespace hobbit{
             out += " " + std::to_string(this->header.size());
             out += " " + std::to_string(this->body.size());
             if(this->head_only_indicator){
-                out += " H";
+                out += " H\n";
             }else{
                 out += "\n";
                 out += this->header + this->body;
