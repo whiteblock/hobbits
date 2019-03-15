@@ -1,6 +1,7 @@
 - suite: 'Basic Sanity Tests'
     requests:
-    - command: PING
+    - desc: 'head only indicator in request'
+      command: PING
       head-only: true
       compression: none
       response-compression: none
@@ -8,7 +9,8 @@
       # headers:
       # body:
       expected-marshal: "EWP 0.1 PING none none 0 0 H"
-    - command: PING
+    - desc: 'regular request with omitted head only indicator'
+      command: PING
       head-only: false
       compression: none
       response-compression: none
@@ -17,14 +19,16 @@
       # body:
       expected-marshal: "EWP 0.1 PING none none 0 0"
     responses:
-    - status: 200
+    - desc: '200 response -- head only'
+      status: 200
       head-only: true
       compression: none
       # TODO:
       # headers:
       # body:
       expected-marshal: "200 none 0"
-    - status: 200
+    - desc: '200 response -- head & body'
+      status: 200
       head-only: false 
       compression: none
       # TODO:
