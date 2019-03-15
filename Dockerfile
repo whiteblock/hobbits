@@ -12,11 +12,13 @@ RUN apt install -y --no-install-recommends \
     rustc \
     swift
 
-WORKDIR /hobbit
+WORKDIR /hobbits
 
 COPY parsers/ parsers/
+COPY test/ test/
 
-WORKDIR /hobbit/parsers
+WORKDIR /hobbits
 
 RUN ./build.sh
 
+RUN python test/run.py
