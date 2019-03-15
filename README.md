@@ -1,8 +1,6 @@
-# Hobbits, or There and Back Again: A Lightweight, Multiclient Wire Protocol For Web3 Communications
+# Hobbits, or There and Back Again
 
-## Contributing
-
-Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
+A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
 ## 0.1 EWP (Ethereum Wire Protocol)
 
@@ -94,3 +92,7 @@ EWP 0.1 HELLO none none 321 1234
 ```
 python test/run.sh
 ```
+
+## Contributing
+
+Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
