@@ -13,7 +13,9 @@
 }
 ```
 
-## `0x10` REQUEST_BLOCK_ROOT
+## Block Root
+
+### `0x10` REQUEST_BLOCK_ROOT
 
 ```python
 {
@@ -25,7 +27,7 @@
 }
 ```
 
-## `0x11` SEND_BLOCK_ROOT
+### `0x11` SEND_BLOCK_ROOT
 
 ```python
 [
@@ -37,7 +39,9 @@
 ]
 ```
 
-## `0x12` REQUEST_BLOCK_HEADER
+## Block Header
+
+### `0x12` REQUEST_BLOCK_HEADER
 
 ```python
 {
@@ -49,10 +53,12 @@
 }
 ```
 
-## `0x13` SEND_BLOCK_HEADER
+### `0x13` SEND_BLOCK_HEADER
 ? Block header structure ?
 
-## `0x14` REQUEST_BLOCK_BODY
+## Block Body
+
+### `0x14` REQUEST_BLOCK_BODY
 
 ```python
 {
@@ -64,5 +70,5 @@
 }
 ```
 
-## `0x15` SEND_BLOCK_BODY
+### `0x15` SEND_BLOCK_BODY
 ? Block body structure ?
