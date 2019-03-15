@@ -43,10 +43,10 @@ int main(int argc,char** argv)
     size_t size = atol(argv[2]);
     string type(argv[1]);
     string input = parse_input(size);
-    if(type == "response"){
+    if(type == "request"){
         hobbit::ewp_request req(input);
         cout<<req.marshal();
-    }else if(type == "request"){
+    }else if(type == "response"){
         hobbit::ewp_response res(input);
         cout<<res.marshal();
     }else{
