@@ -4,11 +4,20 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
 ## Implementations
 
- - [Swift](https://github.com/yeeth/Hobbits.swift)
-
 ### Demo Implementations
+ - [C++](/parsers/cpp)
+ - [Go](/parsers/go)
+ - [Java](/parsers/java)
+ - [Javascript](/parsers/js)
+ - [PHP](/parsers/php)
+ - [Python](/parsers/python)
+ - [Racket](/parsers/racket)
+ - [Rust](/parsers/rs)
+ - [Scheme](/parsers/scheme)
+ - [Swift](/parsers/swift)
 
 ### Full Implementations
+ - [Swift](https://github.com/yeeth/Hobbits.swift)
 
 ### Missing languages
   * brainfuck
