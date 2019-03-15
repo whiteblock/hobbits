@@ -1,4 +1,5 @@
 import re
+import subprocess
 import unittest
 import yaml
 
@@ -17,7 +18,8 @@ if __name__ == '__main__':
 
         for request in suite['requests']:
             desc = re.sub('[ -]', '_', request['desc']).lower()
-            test_func = lambda self, desc=desc : self.assertEqual(1, 2)
+            test_func = lambda self, request=request: println(request)
+
             test_name = "_".join([ 'test', suite_name, 'request', desc ])
             setattr(DynamicTest, test_name, test_func)
 
@@ -28,4 +30,4 @@ if __name__ == '__main__':
             setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
-
+    subprocess.run([" parsers/rs/parser" ])
