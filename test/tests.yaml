@@ -8,7 +8,7 @@
       # TODO:
       # headers:
       # body:
-      expected-marshal: "EWP 0.1 PING none none 0 0 H"
+      expected-marshal: "EWP 0.1 PING none none 0 0 H\n"
     - desc: 'regular request with omitted head only indicator'
       command: PING
       head-only: false
@@ -17,7 +17,7 @@
       # TODO:
       # headers:
       # body:
-      expected-marshal: "EWP 0.1 PING none none 0 0"
+      expected-marshal: "EWP 0.1 PING none none 0 0\n"
     responses:
     - desc: '200 response -- head only'
       status: 200
@@ -26,7 +26,7 @@
       # TODO:
       # headers:
       # body:
-      expected-marshal: "200 none 0"
+      expected-marshal: "200 none 0\n"
     - desc: '200 response -- head & body'
       status: 200
       head-only: false 
@@ -34,4 +34,4 @@
       # TODO:
       # headers:
       # body:
-      expected-marshal: "200 none 0 0"
+      expected-marshal: "200 none 0 0\n"
