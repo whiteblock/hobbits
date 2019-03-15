@@ -1,19 +1,24 @@
+import re
 import unittest
+import yaml
 
 class DynamicTest(unittest.TestCase):
     longMessage = True
 
-if __name__ == '__main__':
-    testsmap = {
-        'foo': [1, 1],
-        'bar': [1, 2],
-        'baz': [5, 5]}
+def load_yaml_file(path):
+    with open(path, 'r') as stream:
+        return yaml.load(stream)
 
-    for name, params in testsmap.iteritems():
-        test_func = lambda self, params=params : (
-            self.assertEqual(params[0], params[1], name)
-        )
-        setattr(DynamicTest, 'test_{0}'.format(name), test_func)
+if __name__ == '__main__':
+    suites = load_yaml_file('test/tests.yaml')
+
+    for suite in suites:
+        suite_name = re.sub('[ -]', '_', suite['suite']).lower()
+        for request in suite['requests']:
+            desc = re.sub('[ -]', '_', request['desc']).lower()
+            test_func = lambda self, desc=desc : self.assertEqual(1, 2)
+            test_name = "_".join([ 'test', suite_name, desc ])
+            setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
 

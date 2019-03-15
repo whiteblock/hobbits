@@ -60,3 +60,9 @@ EWP 0.1 HELLO none none 321 1234
 # Response
 200 none 0 0
 ```
+
+## Running Tests
+
+```
+python test/run.sh
+```
