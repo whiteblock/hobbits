@@ -43,5 +43,5 @@ $test->parse("200 none 5 5\n1234512345");
 
 print_r($test);
 
-echo $test->marshal()."\n";
+echo $test->marshal()."\n";*/
 ?>
