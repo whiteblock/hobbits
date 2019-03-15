@@ -28,17 +28,9 @@ pushd rs
     rustc parser.rs
 popd
 
-#pushd scheme
-# Work in mothaf***ing progress
-#   mit-scheme --eval '
-#   (catch #t
-#     (lambda ()
-#       (cf "parser"))
-#     (lambda (key . parameters)
-#       ()))
-#   (quit)
-#   '
-#popd
+pushd scheme
+    raco exe test.scm
+popd
 
 pushd swift
     swiftc parser.swift
