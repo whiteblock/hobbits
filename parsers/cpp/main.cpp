@@ -2,22 +2,17 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "hobbit.h"
+#include "request.h"
+#include "response.h"
 
 using namespace std;
 
 int main(int argc,char** argv)
 {   
-    auto res =  hobbit::parse(string("EWP 0.1 PING none none 0 5\n12345"));
-    cout<<res.proto<<endl;
-    cout<<res.version<<endl;
-    cout<<res.command<<endl;
-    cout<<res.compression<<endl;
-    std::for_each(res.response_compression.begin(),res.response_compression.end(),[](const string& part){
-        cout<<part<<",";
-    });
-    cout<<endl;
-    cout<<res.head_only_indicator<<endl;
-    cout<<res.header<<endl;
-    cout<<res.body<<endl;
+    hobbit::ewp_request req(string("EWP 0.1 PING none none 0 5\n12345"));
+    hobbit::ewp_response res(string("200 none 5 5\n1234512345"));
+
+    cout<<req.marshal()<<endl<<endl;
+    cout<<res.marshal()<<endl<<endl;
+    return 0;
 }
