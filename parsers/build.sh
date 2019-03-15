@@ -21,7 +21,7 @@ popd
 #popd
 
 pushd racket
-    raco exe hobbit.rkt
+    raco exe test.rkt
 popd
 
 pushd rs
