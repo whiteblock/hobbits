@@ -21,9 +21,11 @@ namespace hobbit{
 
         void parse(const std::string& in)
         {
-            auto req_split = explode(in,'\n');
+            size_t index = in.find('\n');
+            const auto response_line = in.substr(0,index);
+            const auto response_body = in.substr(index+1);
 
-            auto request = explode(req_split[0],' ');
+            auto request = explode(response_line,' ');
             if(request.size() < 3){
                 throw std::invalid_argument("Not enough parameters");
                 //Not enough parameters
@@ -31,9 +33,9 @@ namespace hobbit{
             this->response_status = std::stoi(request[0]);
             this->compression = request[1];
 
-            this->header = req_split[1].substr(0,std::stoi(request[2]));
+            this->header = response_body.substr(0,std::stoi(request[2]));
             if(request.size() == 4){
-                this->body = req_split[1].substr(std::stoi(request[2]),std::stoi(request[3]));
+                this->body = response_body.substr(std::stoi(request[2]),std::stoi(request[3]));
                 this->has_body = true;
             }else{
                 this->has_body = false;
