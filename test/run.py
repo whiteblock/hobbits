@@ -10,8 +10,8 @@ FIELDS = [
 ]
 
 LANGS = {
-    'cpp': './parsers/cpp/test',
-    'rs': './parsers/rs/parser'
+    'cpp': [ './parsers/cpp/test' ],
+    'rs': [ './parsers/rs/parser' ]
 }
 
 class DynamicTest(unittest.TestCase):
@@ -36,7 +36,7 @@ def run_impl(args, stdindata):
 if __name__ == '__main__':
     suites = load_yaml_file('test/tests.yaml')
 
-    for lang, binpath in LANGS.iteritems():
+    for lang, lang_args in LANGS.iteritems():
         for suite in suites:
             suite_name = re.sub('[ -]', '_', suite['suite']).lower()
 
@@ -44,8 +44,11 @@ if __name__ == '__main__':
                 desc = re.sub('[ -]', '_', request['desc']).lower()
                 test_name = "_".join([ 'test', lang, suite_name, 'request', desc ])
 
+                args = []
+                args.extend(lang_args)
+                args.extend([ 'request', str(len(request['marshalled'])) ])
                 expected = request['marshalled']
-                actual = run_impl([ binpath, 'request', str(len(request['marshalled'])) ], request['marshalled'])
+                actual = run_impl(args, expected)
 
                 test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
                 setattr(DynamicTest, test_name, test_func)
@@ -54,11 +57,13 @@ if __name__ == '__main__':
                 desc = re.sub('[ -]', '_', response['desc']).lower()
                 test_name = "_".join([ 'test', lang, suite_name, 'response', desc ])
 
+                args = []
+                args.extend(lang_args)
+                args.extend([ 'response', str(len(request['marshalled'])) ])
                 expected = request['marshalled']
-                actual = run_impl([ binpath, 'response', str(len(request['marshalled'])) ], request['marshalled'])
+                actual = run_impl(args, expected)
 
                 test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
                 setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
-
