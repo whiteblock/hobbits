@@ -39,5 +39,27 @@
               (equal? "H" (list-ref req-line 8 )))
             (substring (car (cdr (string-split request "\n"))) 0 header-len)
             (substring (car (cdr (string-split request "\n"))) header-len (+ header-len body-len)))))))
-    
 )
+
+(define (arr-to-string lst)
+  (if (equal? (length lst) 1) (car lst)
+      (string-append (string-append (car lst) ",") (arr-to-string (cdr lst))))
+)
+
+(define (arr-merge arr spacer start end)
+  (if (equal? start end) (car arr)
+    (string-append (string-append (car arr) spacer) (arr-merge (cdr arr) spacer start (- end 1)))))
+
+(define (marshal-request request)
+   (string-append (arr-merge request " " 0  3)
+    (string-append " "
+     (string-append (arr-to-string (list-ref request 4))
+      (string-append " "
+       (string-append (number->string (string-length (list-ref request 6)))
+        (string-append " "
+         (string-append (number->string (string-length (list-ref request 7)))
+          (string-append (if (list-ref request 5) " H" "" )
+           (string-append "\n"
+            (string-append (list-ref request 6) (list-ref request 7)))))))))))
+)
+
