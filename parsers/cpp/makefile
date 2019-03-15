@@ -6,13 +6,13 @@ CFLAGS=-g -std=$(VERSION) -Wno-format -Wall
 
 FILES=main.cpp
 
-
+OBJS := $(FILES:.cpp=.o)
 .PHONY: clean fclean re all
 
-all: $(OBJECTS) test
+all: test
 	
-test: 
-	$(CC) $(CFLAGS) $(FILES) -o test
+test: % : main.cpp
+	$(CC) $(CFLAGS) $< -o test
 
 clean: 
 	rm -f $(OBJECTS)  $(TEST_OBJ)
