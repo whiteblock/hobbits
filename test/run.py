@@ -9,6 +9,11 @@ FIELDS = [
     "head-only", "headers", "body"
 ]
 
+LANGS = {
+    'cpp': [ './parsers/cpp/test' ],
+    'rs': [ './parsers/rs/parser' ]
+}
+
 class DynamicTest(unittest.TestCase):
     longMessage = True
 
@@ -31,27 +36,34 @@ def run_impl(args, stdindata):
 if __name__ == '__main__':
     suites = load_yaml_file('test/tests.yaml')
 
-    for suite in suites:
-        suite_name = re.sub('[ -]', '_', suite['suite']).lower()
+    for lang, lang_args in LANGS.iteritems():
+        for suite in suites:
+            suite_name = re.sub('[ -]', '_', suite['suite']).lower()
 
-        for request in suite['requests']:
-            desc = re.sub('[ -]', '_', request['desc']).lower()
-            test_name = "_".join([ 'test', suite_name, 'request', desc ])
+            for request in suite['requests']:
+                desc = re.sub('[ -]', '_', request['desc']).lower()
+                test_name = "_".join([ 'test', lang, suite_name, 'request', desc ])
 
-            expected = request['marshalled']
-            print(['./parsers/cpp/test', 'request', str(len(request['marshalled'])) ], request['marshalled'])
-            actual = run_impl(['./parsers/cpp/test', 'request', str(len(request['marshalled'])) ], request['marshalled'])
+                args = []
+                args.extend(lang_args)
+                args.extend([ 'request', str(len(request['marshalled'])) ])
+                expected = request['marshalled']
+                actual = run_impl(args, expected)
 
-            test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
-            setattr(DynamicTest, test_name, test_func)
+                test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
+                setattr(DynamicTest, test_name, test_func)
 
-        for request in suite['responses']:
-            desc = re.sub('[ -]', '_', request['desc']).lower()
+            for response in suite['responses']:
+                desc = re.sub('[ -]', '_', response['desc']).lower()
+                test_name = "_".join([ 'test', lang, suite_name, 'response', desc ])
 
-            test_func = lambda self, desc=desc : self.assertEqual(1, 1)
-            test_name = "_".join([ 'test', suite_name, 'response', desc ])
+                args = []
+                args.extend(lang_args)
+                args.extend([ 'response', str(len(request['marshalled'])) ])
+                expected = request['marshalled']
+                actual = run_impl(args, expected)
 
-            setattr(DynamicTest, test_name, test_func)
+                test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
+                setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
-
