@@ -40,3 +40,5 @@ func parse(request: String) -> Request {
         body: body.utf8
     )
 }
+
+print(parse(request: "EWP 0.1 PING none none 0 5\n12345"))
