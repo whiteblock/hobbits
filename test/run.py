@@ -11,7 +11,8 @@ FIELDS = [
 
 LANGS = {
     'cpp': [ './parsers/cpp/test' ],
-    'rs': [ './parsers/rs/parser' ]
+    'rs': [ './parsers/rs/parser' ],
+    'racket': ['./parsers/racket/test']
 }
 
 class DynamicTest(unittest.TestCase):
@@ -59,8 +60,8 @@ if __name__ == '__main__':
 
                 args = []
                 args.extend(lang_args)
-                args.extend([ 'response', str(len(request['marshalled'])) ])
-                expected = request['marshalled']
+                args.extend([ 'response', str(len(response['marshalled'])) ])
+                expected = response['marshalled']
                 actual = run_impl(args, expected)
 
                 test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
