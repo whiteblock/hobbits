@@ -1,0 +1,34 @@
+- suite: 'Basic Sanity'
+  requests:
+  - desc: 'head only indicator enabled'
+    command: PING
+    head-only-indicator: true
+    compression: none
+    response-compression: [ none ]
+    # TODO:
+    # headers:
+    # body:
+    expected-marshal: "EWP 0.1 PING none none 0 0 H\n"
+  - desc: 'head only indicator omitted'
+    command: PING
+    compression: none
+    response-compression: [ none ]
+    # TODO:
+    # headers:
+    # body:
+    expected-marshal: "EWP 0.1 PING none none 0 0\n"
+  responses:
+  - desc: '200 -- head only'
+    status: 200
+    compression: none
+    # TODO:
+    # headers:
+    # body:
+    expected-marshal: "200 none 0\n"
+  - desc: '200 -- head and body'
+    status: 200
+    compression: none
+    # TODO:
+    # headers:
+    # body:
+    expected-marshal: "200 none 0 0\n"

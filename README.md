@@ -22,7 +22,6 @@ headers and body are both BSON data payloads which are separately compressed and
   * brainfuck
   * bash
   * perl
-  * java
   * x86 asm
   * ruby
   * ada
@@ -60,4 +59,10 @@ EWP 0.1 HELLO none none 321 1234
 <1234 bytes of binary bson body data>
 # Response
 200 none 0 0
+```
+
+## Running Tests
+
+```
+python test/run.sh
 ```

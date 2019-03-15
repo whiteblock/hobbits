@@ -58,5 +58,5 @@ impl EWPRequest {
 
 fn main() {
     let req = EWPRequest::parse(EXAMPLE_PING_REQ).expect("parse failed");
-    println!("{:#?}", req)
+    println!("{:?}", req)
 }
