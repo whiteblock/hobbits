@@ -27,7 +27,15 @@
 
 ## `0x11` SEND_BLOCK_ROOT
 
-[{block_root: bytes32, slot: uint64}, …]
+```python
+[
+  {
+    'block_root': 'bytes32', 
+    'slot': 'uint64'
+  },
+  …
+]
+```
 
 ## `0x12` REQUEST_BLOCK_HEADER
 
