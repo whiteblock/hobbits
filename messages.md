@@ -41,7 +41,7 @@
 }
 ```
 
-## `0x13` SEND_BLOCK_BODY
+## `0x13` SEND_BLOCK_HEADER
 ? Block header structure ?
 
 ## `0x14` REQUEST_BLOCK_BODY
