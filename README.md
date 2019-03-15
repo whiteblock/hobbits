@@ -1,4 +1,6 @@
-# Hobbits, or There and Back Again: A Lightweight, Multiclient Wire Protocol For Web3 Communications
+# Hobbits, or There and Back Again
+
+A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
 ## Implementations
 
@@ -29,3 +31,7 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 ```
 python test/run.sh
 ```
+
+## Contributing
+
+Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
