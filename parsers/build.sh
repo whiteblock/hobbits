@@ -21,13 +21,17 @@ popd
 #popd
 
 pushd racket
+    raco exe hobbit.rkt
 popd
 
 pushd rs
+    rustc parser.rs
 popd
 
 pushd scheme
+    cf hobbit.scm
 popd
 
 pushd swift
+    swiftc parser.swift
 popd

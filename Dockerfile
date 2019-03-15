@@ -9,6 +9,7 @@ RUN apt install -y --no-install-recommends \
     perl \
     python \
     racket \
+    rustc \
     swift
 
 WORKDIR /hobbit
