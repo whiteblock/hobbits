@@ -22,7 +22,6 @@ headers and body are both BSON data payloads which are separately compressed and
   * brainfuck
   * bash
   * perl
-  * java
   * x86 asm
   * ruby
   * ada
