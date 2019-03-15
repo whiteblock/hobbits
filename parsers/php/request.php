@@ -10,15 +10,9 @@ class ewp_request{
     public $header;
     public $body;
 
-    function __construct(){
-
-    }
-
-    function parse(string $raw) {
-        $req_split = explode("\n",$raw);
-        print_r($req_split);
+    public function parse(string $raw) {
+        $req_split = explode("\n",$raw,2);
         $given_request = explode(" ",$req_split[0]);
-        print_r($given_request);
         $this->proto = $given_request[0];
         $this->version = $given_request[1];
         $this->command = $given_request[2];
