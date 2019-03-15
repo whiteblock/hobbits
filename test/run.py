@@ -12,7 +12,7 @@ FIELDS = [
 LANGS = {
     'cpp': [ './parsers/cpp/test' ],
     'rs': [ './parsers/rs/parser' ],
-    'racket': ['./parsers/racket/test']
+#    'racket': ['./parsers/racket/test']
 }
 
 class DynamicTest(unittest.TestCase):
