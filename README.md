@@ -2,6 +2,8 @@
 
 ## Implementations
 
+ - [Swift](https://github.com/yeeth/Hobbits.swift)
+
 ### Demo Implementations
 
 ### Full Implementations
