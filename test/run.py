@@ -39,7 +39,8 @@ if __name__ == '__main__':
             test_name = "_".join([ 'test', suite_name, 'request', desc ])
 
             expected = request['marshalled']
-            actual = run_impl(['./parsers/rs/parser', 'request' ], request['marshalled'])
+            print(['./parsers/cpp/test', 'request', str(len(request['marshalled'])) ], request['marshalled'])
+            actual = run_impl(['./parsers/cpp/test', 'request', str(len(request['marshalled'])) ], request['marshalled'])
 
             test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
             setattr(DynamicTest, test_name, test_func)
