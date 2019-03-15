@@ -24,10 +24,13 @@
               (explode (list-tail lst (+ i 1)) delimit)    )))))
 )
 
-;list-ref
+;Parse the response into a tuple of the important parts
+;(parse-request "EWP 0.1 PING none none,non 2 3\n55555") ->
+; '("EWP" "0.1" "PING" "none" ("none" "non") #f "55" "555")
   
 (define (parse-request request)
   (let ([req-line (parse-request-line (car (string-split request "\n")))])
+   (let ([payload (arr-to-string (cdr (string-split request "\n")) "\n") ])
     (let ([body-len (string->number (car (reverse req-line)))])
       (let ([header-len (string->number (car(cdr (reverse req-line))))])
         (append
@@ -37,18 +40,19 @@
             (and
               (equal? 8 (length req-line))
               (equal? "H" (list-ref req-line 8 )))
-            (substring (car (cdr (string-split request "\n"))) 0 header-len)
-            (substring (car (cdr (string-split request "\n"))) header-len (+ header-len body-len)))))))
+            (substring payload 0 header-len)
+            (substring payload header-len (+ header-len body-len))))))))
 )
 
-(define (arr-to-string lst)
+(define (arr-to-string lst delim)
   (if (equal? (length lst) 1) (car lst)
-      (string-append (string-append (car lst) ",") (arr-to-string (cdr lst))))
+      (string-append (string-append (car lst) delim) (arr-to-string (cdr lst) delim)))
 )
 
 (define (arr-merge arr spacer start end)
   (if (equal? start end) (car arr)
     (string-append (string-append (car arr) spacer) (arr-merge (cdr arr) spacer start (- end 1)))))
+
 
 (define (marshal-request request)
    (string-append (arr-merge request " " 0  3)
@@ -62,4 +66,39 @@
            (string-append "\n"
             (string-append (list-ref request 6) (list-ref request 7)))))))))))
 )
+;(parse-request "EWP 0.1 PING none none,non 2 3\n55555")
+;(marshal-request (parse-request "EWP 0.1 PING none none,non 2 3\n55555"))
 
+(define (parse-response-line rl)
+  (let ([arr (string-split rl " ")])
+   (append
+    (list
+     (string->number (car arr))
+     (cadr arr)
+     (string->number (caddr arr)))
+    (if (equal? (length arr) 4) (list (string->number (list-ref arr 3))) '())))
+)
+; (parse-response "200 none 5 5\n1234512345")
+; (parse-response "200 none 5\n1234512345")
+(define (parse-response response)
+  (let ([res-line (parse-response-line (car (string-split response "\n")))])
+   (let ([payload (arr-to-string (cdr (string-split response "\n")) "\n") ])
+     (append (reverse (list-tail (reverse res-line) (- (length res-line) 2)))
+       (append (list (substring payload 0 (list-ref res-line 2)))
+         (if (equal? (length res-line) 3) '()
+           (list (substring payload (list-ref res-line 2) (+ (list-ref res-line 2) (list-ref res-line 3)))))
+        ))))
+  )
+;(marshal-response (parse-response "200 none 5 5\n1234512345"))
+(define (marshal-response response)
+  (string-append (number->string (car response))
+   (string-append " "
+    (string-append (cadr response)
+     (string-append " "
+      (string-append (number->string (string-length (list-ref response 2)))
+       (string-append (if (equal? (length response) 3) "" (string-append " " (number->string (string-length (list-ref response 3)))))
+        (string-append "\n"
+         (string-append (list-ref response 2)
+          (if (equal? (length response) 3) "" (list-ref response 3)))))))))))
+         
+  
