@@ -26,7 +26,7 @@
 
 
 (define (arr-to-string lst delim)
-  (if (equal? (length lst) 1) (car lst)
+  (if (empty? lst) ""
       (string-append (string-append (car lst) delim) (arr-to-string (cdr lst) delim)))
 )
 
