@@ -6,9 +6,9 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 
 ## 0.1 EWP (Ethereum Wire Protocol)
 
-#### types
+### types
 
-##### `request`
+#### `request`
 
 ```python
 {
@@ -22,7 +22,7 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 }
 ```
 
-##### `response`
+#### `response`
 
 ```python
 {
@@ -33,20 +33,20 @@ Please create issues to document your critiques, suggestions, improvements, etc.
 }
 ```
 
-#### command
+### command
 may contain any uppercase letter or digit or _  to describe the command
 
-#### compression preference
+### compression preference
 the first preference field is describing the compression codec of the request headers & body in all lowercase letters or digits or _
 
 the second preference field is the list of supported compression codecs for the response in order from most preferred to least preferred separated by commas and preferences in all lowercase letters or digits or _
 
 none can be specified to indicate no compression is to be used on the header or body data.
 
-#### headers and body
+### headers and body
 headers and body are both BSON data payloads which are separately compressed and encoded -- the idea is to keep the headers lightweight so packets can be partially processed without having to decode the whole body in every case.
 
-#### missing languages
+### missing languages
   * brainfuck
   * bash
   * perl
