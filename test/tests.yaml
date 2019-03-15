@@ -27,7 +27,7 @@
     # headers:
     # body:
     expected-marshal: "200 none 0\n"
-  - desc: '200 response -- head & body'
+  - desc: '200 response -- head and body'
     status: 200
     head-only: false
     compression: none

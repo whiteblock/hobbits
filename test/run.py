@@ -14,10 +14,17 @@ if __name__ == '__main__':
 
     for suite in suites:
         suite_name = re.sub('[ -]', '_', suite['suite']).lower()
+
         for request in suite['requests']:
             desc = re.sub('[ -]', '_', request['desc']).lower()
             test_func = lambda self, desc=desc : self.assertEqual(1, 2)
-            test_name = "_".join([ 'test', suite_name, desc ])
+            test_name = "_".join([ 'test', suite_name, 'request', desc ])
+            setattr(DynamicTest, test_name, test_func)
+
+        for request in suite['responses']:
+            desc = re.sub('[ -]', '_', request['desc']).lower()
+            test_func = lambda self, desc=desc : self.assertEqual(1, 2)
+            test_name = "_".join([ 'test', suite_name, 'response', desc ])
             setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
