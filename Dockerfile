@@ -7,15 +7,18 @@ RUN apt install -y --no-install-recommends \
     ca-certificates \
     curl \
     golang-go \
+    libedit-dev \
+    libxml2-dev \
     mit-scheme \
     perl \
     python \
+    python-dev \
     racket \
-    rustc \
-    swift
+    rustc
 
 # install swift
 RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C /opt --strip 2 -xvzf -
+ENV PATH "/opt/bin:$PATH"
 
 WORKDIR /hobbits
 
