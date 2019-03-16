@@ -1,3 +1,6 @@
+use std::env;
+use std::io::{self, Read};
+
 
 static EXAMPLE_PING_REQ: &[u8] = b"EWP 0.1 PING none none 0 5\n12345";
 
@@ -18,7 +21,7 @@ impl EWPRequest {
         let parts: Vec< &[u8] > = req.splitn(2, |chr| chr == &('\n' as u8) ).collect();
         let req_line: String = String::from_utf8(parts[0].to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let r: Vec<String> = req_line.splitn(8, |chr| chr == ' ').map(|s| s.to_string()).collect();
-        let payload = parts[1];
+        let payload = parts.get(1);
         assert!(&r[0] == "EWP");
         assert!(&r[1] == "0.1");
         let headers_len = r[5].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
@@ -31,8 +34,14 @@ impl EWPRequest {
             compression: r[3].clone(),
             response_compression: r[4].split(|chr| chr == ',').map(|s| s.to_string()).collect(),
             head_only_indicator: r.get(7) == Some(&"H".to_string()),
-            headers: payload[0..headers_len].to_vec(),
-            body: payload[headers_len..body_len].to_vec(),
+            headers: match payload {
+                Some(payload) => payload[0..headers_len].to_vec(),
+                None => vec![],
+            },
+            body: match payload {
+                Some(payload) => payload[headers_len..body_len].to_vec(),
+                None => vec![],
+            }
         })
     }
     pub fn marshal(&self) -> Vec<u8> {
@@ -85,6 +94,26 @@ impl EWPResponse {
 }
 
 fn main() {
-    let req = EWPRequest::parse(EXAMPLE_PING_REQ).expect("parse failed");
-    println!("{:?}", req)
+    let args: Vec<String> = env::args().collect();
+    let mode = &args[1];
+    let payload_len: usize = args[2].parse().expect("payload length is not an integer");
+    let mut buffer = vec![0u8; payload_len];
+
+    io::stdin().read_exact(&mut buffer).expect("could not read stdin");
+
+    match mode.as_str() {
+        "request" => {
+            let req = EWPRequest::parse(&buffer).expect("parse request failed");
+            let marshalled = req.marshal();
+            let marshalled_str = unsafe { String::from_utf8_unchecked(marshalled) };
+            print!("{}", marshalled_str)
+        },
+        "response" => {
+            //let res = EWPResponse::parse(&buffer).expect("parse response failed");
+            //let marshalled = res.marshal();
+            //println!("{:?}", marshalled)
+            print!("STUB")
+        },
+        _ => panic!("invalid serialization type"),
+    };
 }
