@@ -36,6 +36,8 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 python test/run.py
 ```
 
+Basic [benchmark results](https://gist.github.com/prestonvanloon/6663510164f967fa05553ead157cd5c1) against Protobuf. 
+
 ## Contributing
 
 Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
