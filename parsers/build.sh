@@ -36,6 +36,6 @@ pushd scheme
     raco exe test.scm
 popd
 
-pushd swift
-    swiftc parser.swift
-popd
+#pushd swift
+#    swiftc parser.swift
+#popd
