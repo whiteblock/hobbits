@@ -9,7 +9,7 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
  - [Protocol](/protocol.md)
  - [Response Codes](/response-codes.md)
  
-### ETH 2.0
+### ETH 2.0 Protocol
  - [Messages](/messages.md)
 
 ## Implementations
