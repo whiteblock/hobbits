@@ -4,6 +4,10 @@ pushd cpp
     make
 popd
 
+pushd d
+    make
+popd
+
 pushd go
     go build parser.go
 popd

@@ -12,11 +12,14 @@ RUN apt install -y --no-install-recommends \
     python \
     racket \
     rustc \
-    swift
+    swift \
+    snapd
 
 # install swift
 RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C /opt --strip 2 -xvzf -
 
+#install dlang
+RUN snap install dmd --classic
 WORKDIR /hobbits
 
 COPY parsers/ parsers/

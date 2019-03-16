@@ -13,6 +13,16 @@
 }
 ```
 
+## Ping / Pong
+
+### `0x01` PING
+
+This request has no body definition.
+
+### `0x02` PONG
+
+This response has no body definition.
+
 ## Block Root
 
 ### `0x10` REQUEST_BLOCK_ROOT
