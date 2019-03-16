@@ -18,6 +18,10 @@ This response code is returned when the caller is not allowed to access specific
 
 This response code is returned when a lookup or similar function against a node returned empty results.
 
+## `418` Not a Blockchain
+
+This response code is returned when the node software refuses to cooperate because it is not actually a blockchain.
+
 ## `500` Internal Server Error
 
 This response code is returned when a node experiences some form of internal error that causes it to fail handling the request as expected.
