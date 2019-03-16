@@ -3,11 +3,14 @@
 echo "8===D"
 cd ..
 cd swift/
-if [ -x parser.swift ]
+if [ -x parser ]
 then 
-    ./parser
+    ./parser >> parser.txt
+    cat parser.txt
     else
         swiftc -o parser parser.swift
-        ./parser
+        ./parser >> parser.txt
+        cat parser.txt
 fi
+
 exit
