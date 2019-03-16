@@ -33,7 +33,7 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 ## Running Tests
 
 ```
-python test/run.sh
+python test/run.py
 ```
 
 ## Contributing
