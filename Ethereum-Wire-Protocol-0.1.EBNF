@@ -3,7 +3,7 @@ response = response-line, lf, headers, [ body ] ;
 
 request-line = magic , sp , version , sp , command , sp , compression-preference , sp , compression-preferences , sp , headers-len , sp , body-len , [ sp , head-only-indicator ];
 
-response-line = response-status , sp , compression-preference , sp , headers-len , [ sp , body-len ];
+response-line = response-status , sp , compression-preference , sp , headers-len , sp , body-len;
 
 response-status = digit , { digit } ;
 magic = 'EWP' ;
