@@ -11,10 +11,12 @@ FIELDS = [
 
 LANGS = {
     'cpp': [ './parsers/cpp/test' ],
+    'd': ['./parsers/d/main'],
     'php': ['php','./parsers/php/test.php'],
     'rs': [ './parsers/rs/parser' ],
     'racket': ['./parsers/racket/test'],
     'scheme':['./parsers/scheme/test'],
+    'python':["python", './parsers/python/test.py'],
 }
 
 class DynamicTest(unittest.TestCase):

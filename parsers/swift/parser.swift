@@ -34,7 +34,7 @@ func parse(request: String) -> Request {
         version: String(r[1]),
         command: String(r[2]),
         compression: String(r[3]),
-        responseCompression: String(r[4]).split(separator: " ").map { return String($0) },
+        responseCompression: String(r[4]).split(separator: ",").map { return String($0) },
         headOnlyIndicator: String(r[7]) == "H",
         headers: [UInt8](headers.utf8),
         body: [UInt8](body.utf8)

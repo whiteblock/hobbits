@@ -41,15 +41,13 @@ def req_marshal(req):
         command = req.get("command")
         compression = req.get("compression")
         responseCompression = ",".join(req.get("responseCompression"))
-        headOnlyIndicator = ("\b", "H")[req.get("headOnlyIndicator")]
+        headOnlyIndicator = ("", " H")[req.get("headOnlyIndicator")]
         headerLen = len(req.get("headers"))
-        headers = (req.get("headers"), "\b")[headerLen == 0]
+        headers = (req.get("headers"), "")[headerLen == 0]
         bodyLen = len(req.get("body"))
-        body = (req.get("body"), "\b")[bodyLen == 0]
-        return (repr("{} {} {} {} {} {} {} {}\n{}{}")).format(proto, version, command, compression, responseCompression, headerLen, bodyLen, headOnlyIndicator, headers, body)
-    elif isinstance(req,str):
-        parsed = req_parse(req)
-        return req_marshal(parsed)
+        body = (req.get("body"), "")[bodyLen == 0]
+        return ("{} {} {} {} {} {} {}{}{}{}").format(proto, version, command, compression, responseCompression, headerLen, bodyLen, headOnlyIndicator, headers, body)
+
 
 def res_parse(res):
     res = res.rstrip()
@@ -72,8 +70,8 @@ def res_marshal(res):
         res_status = res.get("response_status")
         compression = res.get("compression")
         headers = res.get("headers")
-        body = ("\b", res.get("body"))[res.get("has_body")]
-        return (repr("{} {} {} {}\n")).format(res_status, compression, headers, body)
+        body = ("", " "+res.get("body"))[res.get("has_body")]
+        return ("{} {} {}{}").format(res_status, compression, headers, body)
     elif isinstance(res,str):
         parsed = res_parse(res)
         return res_marshal(parsed)
