@@ -3,6 +3,11 @@
 echo "8===D"
 cd ..
 cd swift/
-swiftc -o parser parser.swift
-chmod +x parser.swift
-./parser.swift
+if [ -x parser.swift ]
+then 
+    ./parser
+    else
+        swiftc -o parser parser.swift
+        ./parser
+fi
+exit
