@@ -77,7 +77,7 @@ pub struct EWPResponse {
     pub code: u16,
     pub compression: String,
     pub headers: Vec<u8>,
-    pub body: Vec<u8>
+    pub body: Vec<u8>,
 }
 impl EWPResponse {
     pub fn parse(res: &[u8]) -> Result<Self, std::io::Error> {

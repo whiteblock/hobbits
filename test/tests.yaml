@@ -5,7 +5,5 @@
   - desc: 'head only indicator omitted'
     marshalled: "EWP 0.1 PING none none 0 0\n"
   responses:
-  - desc: '200 -- head only'
-    marshalled: "200 none 0\n"
-  - desc: '200 -- head and body'
+  - desc: '200 -- basic'
     marshalled: "200 none 0 0\n"
