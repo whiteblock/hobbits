@@ -16,13 +16,13 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
  - [Rust](/parsers/rs)
  - [Scheme](/parsers/scheme)
  - [Swift](/parsers/swift)
+ - [Bash](/parsers/bash)
 
 ### Full Implementations
  - [Swift](https://github.com/yeeth/Hobbits.swift)
 
 ### Missing languages
   * brainfuck
-  * bash
   * perl
   * x86 asm
   * ruby

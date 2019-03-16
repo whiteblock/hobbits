@@ -17,16 +17,17 @@ RUN apt install -y --no-install-recommends \
     python-yaml \
     racket \
     rustc \
-    snapd
+    snapd \
+    wget 
 
+
+WORKDIR /tmp
 
 # install swift
-#RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C /opt --strip 2 -xvzf -
-#ENV PATH "/opt/bin:$PATH"
 RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C / --strip 1 -xvzf -
 
 #install dlang
-#RUN snap install dmd --classic
+RUN wget http://downloads.dlang.org/releases/2.x/2.085.0/dmd_2.085.0-0_amd64.deb && dpkg -i dmd_2.085.0-0_amd64.deb
 
 WORKDIR /hobbits
 
