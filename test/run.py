@@ -11,12 +11,12 @@ FIELDS = [
 
 LANGS = {
     'cpp': [ './parsers/cpp/test' ],
-    'd': ['./parsers/d/main'],
+#    'd': ['./parsers/d/main'],
     'php': ['php','./parsers/php/test.php'],
     'rs': [ './parsers/rs/parser' ],
     'racket': ['./parsers/racket/test'],
     'scheme':['./parsers/scheme/test'],
-    'python':["python", './parsers/python/test.py'],
+    'python':['python', './parsers/python/test.py'],
 }
 
 class DynamicTest(unittest.TestCase):
@@ -43,6 +43,7 @@ if __name__ == '__main__':
 
     for lang, lang_args in LANGS.iteritems():
         for suite in suites:
+            print lang
             suite_name = re.sub('[ -]', '_', suite['suite']).lower()
 
             for request in suite['requests']:

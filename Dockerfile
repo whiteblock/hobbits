@@ -11,18 +11,23 @@ RUN apt install -y --no-install-recommends \
     libxml2-dev \
     mit-scheme \
     perl \
+    php \
     python \
     python-dev \
+    python-yaml \
     racket \
     rustc \
     snapd
 
+
 # install swift
-RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C /opt --strip 2 -xvzf -
-ENV PATH "/opt/bin:$PATH"
+#RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C /opt --strip 2 -xvzf -
+#ENV PATH "/opt/bin:$PATH"
+RUN curl -sL https://swift.org/builds/swift-4.2.3-release/ubuntu1804/swift-4.2.3-RELEASE/swift-4.2.3-RELEASE-ubuntu18.04.tar.gz | tar -C / --strip 1 -xvzf -
 
 #install dlang
-RUN snap install dmd --classic
+#RUN snap install dmd --classic
+
 WORKDIR /hobbits
 
 COPY parsers/ parsers/

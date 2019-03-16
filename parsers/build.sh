@@ -4,9 +4,9 @@ pushd cpp
     make
 popd
 
-pushd d
-    make
-popd
+#pushd d
+#    make
+#popd
 
 pushd go
     go build parser.go
@@ -36,6 +36,6 @@ pushd scheme
     raco exe test.scm
 popd
 
-pushd swift
-    swiftc parser.swift
-popd
+#pushd swift
+#    swiftc parser.swift
+#popd
