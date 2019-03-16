@@ -2,5 +2,6 @@
 
 echo "8===D"
 cd ..
-cd python/
-./parser.py
+cd swift/
+swiftc -o parser parser.swift
+./parser.swift
