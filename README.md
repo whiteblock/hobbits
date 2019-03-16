@@ -6,6 +6,7 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
 ### Demo Implementations
  - [C++](/parsers/cpp)
+ - [D](/parsers/d)
  - [Go](/parsers/go)
  - [Java](/parsers/java)
  - [Javascript](/parsers/js)
@@ -27,7 +28,6 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
   * ruby
   * ada
   * c
-  * d
   * css3
  
 
