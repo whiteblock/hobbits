@@ -1,3 +1,12 @@
+# This is the test runner; it runs all parser/marshal implementations against the same suite of marshalled messages.
+# To pass the test the implementation must parse the message from stdin (request or response variant) and then marshal
+# it and print to stdout.
+# The interface the binary or script produced must adhere to is as follows so it is compatible with this test suite:
+# <implementation-binary> <request|response> <payload-size>
+# - request|response determines whether or not we are testing the request or response message type
+# - payload-size is the byte length of the message
+# - STDIN must be read to obtain the marshalled test data; read <payload-size> bytes only to obtain test data bytes
+
 import re
 from subprocess import Popen, PIPE
 import unittest
@@ -43,7 +52,6 @@ if __name__ == '__main__':
 
     for lang, lang_args in LANGS.iteritems():
         for suite in suites:
-            print lang
             suite_name = re.sub('[ -]', '_', suite['suite']).lower()
 
             for request in suite['requests']:
