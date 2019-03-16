@@ -8,6 +8,8 @@ This response code is considered the **default** code. It is returned when the r
 
 ## `400` Bad Request
 
+This response code is returned when the `message` is malformed e.g. does not contain the required fields.
+
 ## `403` Forbidden
 
 ## `404` Not Found
