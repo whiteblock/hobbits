@@ -12,8 +12,12 @@ This response code is returned when the `message` is malformed e.g. does not con
 
 ## `403` Forbidden
 
+This response code is returned when the caller is not allowed to access specific data.
+
 ## `404` Not Found
 
 This response code is returned when the called `command` does not exist. 
 
 ## `500` Internal Server Error
+
+This response code is returned when a node experiences some form of internal error that causes it to fail handling the request as expected.
