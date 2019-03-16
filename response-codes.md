@@ -18,6 +18,14 @@ This response code is returned when the caller is not allowed to access specific
 
 This response code is returned when a lookup or similar function against a node returned empty results.
 
+## `406` Request Compression Unsupported
+
+This response code is returned when the chosen request compression codec is unsupported by the server.
+
+## `407` Response Compression Unsupported
+
+This response code is returned when none of the requested response compression preferences are supported.
+
 ## `418` Not a Blockchain
 
 This response code is returned when the node software refuses to cooperate because it is not actually a blockchain.
