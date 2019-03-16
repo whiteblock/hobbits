@@ -14,4 +14,6 @@ This response code is returned when the `message` is malformed e.g. does not con
 
 ## `404` Not Found
 
+This response code is returned when the called `command` does not exist. 
+
 ## `500` Internal Server Error
