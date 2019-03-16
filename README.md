@@ -6,7 +6,11 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
 ### EWP 0.1
  - [EBNF Grammar](/Ethereum-Wire-Protocol-0.1.EBNF)
+ - [Protocol](/protocol.md)
  - [Response Codes](/response-codes.md)
+ 
+### ETH 2.0
+ - [Messages](/messages.md)
 
 ## Implementations
 
