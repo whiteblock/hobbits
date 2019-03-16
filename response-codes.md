@@ -4,6 +4,8 @@ The EWP defines various response codes inspired by [HTTP Status codes](https://e
 
 ## `200` Ok
 
+This response code is considered the **default** code. It is returned when the request could be answered as is expected.
+
 ## `400` Bad Request
 
 ## `403` Forbidden
