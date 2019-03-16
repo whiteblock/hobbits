@@ -16,7 +16,7 @@ This response code is returned when the caller is not allowed to access specific
 
 ## `404` Not Found
 
-This response code is returned when peer wants to a lookup or similar function returned empty results.
+This response code is returned when a lookup or similar function against a node returned empty results.
 
 ## `500` Internal Server Error
 
@@ -24,4 +24,4 @@ This response code is returned when a node experiences some form of internal err
 
 ## `501` Not Implemented
 
-501 Not Implemented server error response code indicates that the server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request command and is not capable of supporting it.
+This response code is returned when the node does not support the functionality required to fulfill the request. This is the appropriate response when the node does not recognize the request command and is not capable of supporting it.
