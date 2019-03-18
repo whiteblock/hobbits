@@ -91,4 +91,18 @@ This response has no body definition.
 ```
 
 ### `0x15` SEND_BLOCK_BODY
-? Block body structure ?
+
+````python
+{
+    'slot:' 'uint64', 
+    'randao_reveal': 'bytes96',
+    'eth1_data': Eth1Data,
+    'proposer_slashings': [ProposerSlashing],
+    'attester_slashings': [AttesterSlashing],
+    'attestations': [Attestation],
+    'deposits': [Deposit],
+    'voluntary_exits': [VoluntaryExit],
+    'transfers': [Transfer],
+    'header_signature:' 'bytes96'
+}
+```
