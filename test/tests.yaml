@@ -22,4 +22,4 @@
   - desc: '10 byte body'
     marshalled: "200 none 0 10\n0123456789"
   - desc: '9 byte header, 10 byte body, newline hell'
-    marshalled: "200 none 9 19\n987654321\n\n\n\n\n\n\n\n\n\n"
+    marshalled: "200 none 9 10\n987654321\n\n\n\n\n\n\n\n\n\n"

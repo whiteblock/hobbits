@@ -43,7 +43,7 @@
 ; '("EWP" "0.1" "PING" "none" ("none" "non") #f "55" "555")
   
 (define (parse-request request)
-  (let ([req-split (string-split request "\n")])
+  (let ([req-split (string-split request "\n" #:trim? #f #:repeat? #f)])
   (let ([req-line (parse-request-line (car req-split))])
    (let ([payload (if (equal? (length req-split) 1) "" (arr-to-string (cdr req-split) "\n")) ])
     (let ([body-len (string->number (list-ref req-line 6))])
@@ -87,11 +87,11 @@
 ; (parse-response "200 none 5\n1234512345")
 (define (parse-response response)
   (let ([res-line (parse-response-line (car (string-split response "\n")))])
-   (let ([payload (arr-to-string (cdr (string-split response "\n")) "\n") ])
+   (let ([payload (arr-to-string (cdr (string-split response "\n" #:trim? #f #:repeat? #f)) "\n") ])
      (append (reverse (list-tail (reverse res-line) (- (length res-line) 2)))
        (append (list (substring payload 0 (list-ref res-line 2)))
          (if (equal? (length res-line) 3) '()
-           (list (substring payload (list-ref res-line 2) (+ (list-ref res-line 2) (list-ref res-line 3)))))
+           (list (substring payload (list-ref res-line 2)  (+ (list-ref res-line 2) (list-ref res-line 3)))))
         ))))
   )
 
