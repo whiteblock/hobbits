@@ -25,7 +25,7 @@ string parse_input(size_t size){
 }
 
 int main(int argc,char** argv)
-{   
+{
     
     if(argc == 1){
         hobbit::ewp_request req(string("EWP 0.1 PING none none 0 5\n12345"));

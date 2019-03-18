@@ -7,31 +7,14 @@ steps:
 # allow these steps to fail, they try to pull cache first
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
-  args: ['-c', 'docker pull $_IMAGE:${BRANCH_NAME}-built || true' ]
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
   args: ['-c', 'docker pull $_IMAGE:$BRANCH_NAME || true' ]
-# build initial stage docker image
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-            'build',
-            '--target', 'built',
-            '-t', '$_IMAGE:${BRANCH_NAME}-built',
-           '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
-            '.'
-        ]
-# push built stage for caching purposes
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'push', '$_IMAGE:${BRANCH_NAME}-built' ]
 # build final docker image
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
-            '--target', 'final',
             '-t', '$_IMAGE:$BRANCH_NAME',
             '-t', '$_IMAGE:$COMMIT_SHA',
-           '--cache-from', '$_IMAGE:$BRANCH_NAME',
-           '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
+            '--cache-from', '$_IMAGE:$BRANCH_NAME',
             '.'
         ]
 # push docker image tag(s) one branch, one immutable

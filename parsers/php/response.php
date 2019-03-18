@@ -26,7 +26,7 @@ class ewp_response{
     public function marshal(){
         $out = "".$this->response_status." ".$this->compression." ".strlen($this->header);
         if($this->has_body){
-            $out .= " ".strlen($this->header);
+            $out .= " ".strlen($this->body);
         }
         $out .= "\n".$this->header.$this->body;
 
@@ -39,7 +39,7 @@ class ewp_response{
 //Uncomment and run for example
 /*
 $test = new ewp_response;
-$test->parse("200 none 5 5\n1234512345");
+$test->parse("200 none 0 10\n0123456789");
 
 print_r($test);
 

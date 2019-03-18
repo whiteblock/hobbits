@@ -38,5 +38,5 @@ WORKDIR /hobbits
 
 RUN cd parsers && ./build.sh
 
-RUN python test/run.py
+CMD python test/run.py
 

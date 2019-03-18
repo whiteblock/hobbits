@@ -1,6 +1,5 @@
 #lang scheme
 (require "hobbit.scm")
-
 (let ([args (current-command-line-arguments)])
  (if (not (equal? (vector-length args) 2)) (display "No arguments given")
   (let ([size (string->number (vector-ref args 1))])

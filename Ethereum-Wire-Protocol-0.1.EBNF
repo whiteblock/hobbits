@@ -34,4 +34,4 @@ head-only-indicator = "H" ;
 lf = "\n" ;
 
 headers = ? BSON ? ;
-body = ? BSON ? ;
+body = ? COMMAND-DEFINED ENTITY ? ;

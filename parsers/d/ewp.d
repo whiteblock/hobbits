@@ -20,6 +20,7 @@ public:
     void parse(string input)
     {
         ptrdiff_t index = indexOf(input,'\n');
+
         string response_line = input[0 .. index];
         string response_body = input[index+1 .. $];
         auto request = split(response_line,' ');
@@ -31,7 +32,7 @@ public:
         _compression = request[1];
         _header = response_body[0 .. to!int(request[2])];
         if(request.length == 4){
-            _body = response_body[to!int(request[2]) .. to!int(request[3])];
+            _body = response_body[to!int(request[2]) .. to!int(request[2]) + to!int(request[3])];
             _has_body = true;
         }else{
             _has_body = false;
@@ -82,7 +83,7 @@ class request{
         if(index != -1){
             string request_body = input[index+1 .. $];
             _header = request_body[0 .. to!int(request[5])];
-            _body = request_body[to!int(request[5]) .. to!int(request[6])];
+            _body = request_body[to!int(request[5]) .. to!int(request[5]) + to!int(request[6])];
         }
     }
 
