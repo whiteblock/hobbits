@@ -17,7 +17,7 @@ steps:
             'build',
             '--target', 'built',
             '-t', '$_IMAGE:${BRANCH_NAME}-built',
-           '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
+#          '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
             '.'
         ]
 # push built stage for caching purposes
@@ -30,8 +30,8 @@ steps:
             '--target', 'final',
             '-t', '$_IMAGE:$BRANCH_NAME',
             '-t', '$_IMAGE:$COMMIT_SHA',
-           '--cache-from', '$_IMAGE:$BRANCH_NAME',
-           '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
+#          '--cache-from', '$_IMAGE:$BRANCH_NAME',
+#          '--cache-from', '$_IMAGE:${BRANCH_NAME}-built',
             '.'
         ]
 # push docker image tag(s) one branch, one immutable
