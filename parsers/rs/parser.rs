@@ -83,7 +83,7 @@ impl EWPResponse {
                 std::io::Error::new(std::io::ErrorKind::Other, "response newline terminator missing")
             )
         ?;
-        let res_line_raw = &res[..res_line_end_idx];
+        let res_line_raw = &res[..(res_line_end_idx + 1)];
         let payload = &res[(res_line_end_idx + 1)..];
         let res_line: String = String::from_utf8(res_line_raw.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let r: Vec<String> = res_line.splitn(4, |chr| chr == ' ').map(|s| s.to_string()).collect();

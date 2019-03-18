@@ -26,8 +26,8 @@ LANGS = {
     'rs': [ './parsers/rs/parser' ],
     'racket': ['./parsers/racket/test'],
     'scheme':['./parsers/scheme/test'],
-    'python':['python', './parsers/python/test.py'],
-    'go':['go', 'run', './parsers/go/test.go', './parsers/go/parser.go'],
+#   'python':['python', './parsers/python/test.py'],
+#   'go':['go', 'run', './parsers/go/test.go', './parsers/go/parser.go'],
 }
 
 class DynamicTest(unittest.TestCase):
