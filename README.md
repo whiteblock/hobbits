@@ -2,6 +2,16 @@
 
 A Lightweight, Multiclient Wire Protocol For Web3 Communications
 
+## Specifications
+
+### EWP 0.1
+ - [EBNF Grammar](/Ethereum-Wire-Protocol-0.1.EBNF)
+ - [Protocol](/protocol.md)
+ - [Response Codes](/response-codes.md)
+ 
+### ETH 2.0 Protocol
+ - [Messages](/messages.md)
+
 ## Implementations
 
 ### Demo Implementations
@@ -35,6 +45,8 @@ A Lightweight, Multiclient Wire Protocol For Web3 Communications
 ```
 python test/run.py
 ```
+
+Basic [benchmark results](https://gist.github.com/prestonvanloon/6663510164f967fa05553ead157cd5c1) against Protobuf. 
 
 ## Contributing
 

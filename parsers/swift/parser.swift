@@ -1,7 +1,6 @@
 import Foundation
 
 struct Request {
-    let proto: String
     let version: String
     let command: String
     let compression: String
@@ -30,7 +29,6 @@ func parse(request: String) -> Request {
     let body = payload[payload.index(payload.startIndex, offsetBy: headersLength)..<payload.index(payload.startIndex, offsetBy: bodyLength)]
 
     return Request(
-        proto: String(r[0]),
         version: String(r[1]),
         command: String(r[2]),
         compression: String(r[3]),

@@ -64,7 +64,17 @@ This response has no body definition.
 ```
 
 ### `0x13` SEND_BLOCK_HEADER
-? Block header structure ?
+
+```python
+{
+    'slot': 'uint64',
+    'parent_root': 'bytes32',
+    'state_root': 'bytes32',
+    'randao_reveal': 'bytes96',
+    'eth1_data': Eth1Data,
+    'signature': 'bytes96'
+}
+```
 
 ## Block Body
 
@@ -81,4 +91,17 @@ This response has no body definition.
 ```
 
 ### `0x15` SEND_BLOCK_BODY
-? Block body structure ?
+
+```python
+{
+    'randao_reveal': 'bytes96',
+    'eth1_data': Eth1Data,
+    'proposer_slashings': [ProposerSlashing],
+    'attester_slashings': [AttesterSlashing],
+    'attestations': [Attestation],
+    'deposits': [Deposit],
+    'voluntary_exits': [VoluntaryExit],
+    'transfers': [Transfer],
+    'header_signature:' 'bytes96'
+}
+```
