@@ -20,7 +20,7 @@ public:
     void parse(string input)
     {
         ptrdiff_t index = indexOf(input,'\n');
-       // writeln(to!string(index));
+
         string response_line = input[0 .. index];
         string response_body = input[index+1 .. $];
         auto request = split(response_line,' ');
