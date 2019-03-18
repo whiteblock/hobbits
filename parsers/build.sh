@@ -8,9 +8,9 @@ pushd d
     make
 popd
 
-pushd go
-    go build parser.go
-popd
+#pushd go
+#    go build parser.go
+#popd
 
 # N/A
 #pushd js
