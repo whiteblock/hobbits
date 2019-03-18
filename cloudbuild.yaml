@@ -12,7 +12,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
-            '--target', 'final',
             '-t', '$_IMAGE:$BRANCH_NAME',
             '-t', '$_IMAGE:$COMMIT_SHA',
             '--cache-from', '$_IMAGE:$BRANCH_NAME',
