@@ -64,7 +64,16 @@ This response has no body definition.
 ```
 
 ### `0x13` SEND_BLOCK_HEADER
-? Block header structure ?
+
+```python
+{
+    'slot': 'uint64',
+    'parent_root': 'bytes32',
+    'state_root': 'bytes32',
+    'randao_reveal': 'bytes96',
+    'eth1_data': Eth1Data
+}
+```
 
 ## Block Body
 
