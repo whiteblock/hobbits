@@ -17,7 +17,15 @@ type Request struct {
 	body                []byte
 }
 
-func parse(req string) Request {
+type Response struct {
+	responseStatus string
+	compression    []string
+	headers        string
+	body           string
+	hasBody        bool
+}
+
+func reqParse(req string) Request {
 	res := strings.Split(req, "\n")
 
 	reqLine := res[0]
@@ -42,11 +50,48 @@ func parse(req string) Request {
 		headers:             []byte(headers),
 		body:                []byte(body),
 	}
-
 	return request
 }
 
-func main() {
-	example_ping_req := "EWP 0.1 PING none none 0 5\n12345"
-	fmt.Println(parse(example_ping_req))
+func reqMarshal(req Request) string {
+	resCompression := strings.Join(req.responseCompression, ",")
+	headLen := strconv.Itoa(len(req.headers))
+	bodyLen := strconv.Itoa(len(req.body))
+	var headOnlyIndicator string
+	if req.headOnlyIndicator {
+		headOnlyIndicator = " H"
+	} else {
+		headOnlyIndicator = ""
+	}
+	r := fmt.Sprintf("%s %s %s %s %s %s %s%s%s%s", req.proto, req.version, req.command, req.compression, resCompression, headLen, bodyLen, headOnlyIndicator, string(req.headers), string(req.body))
+	return r
+}
+
+func resParse(res string) Response {
+	var has_body bool
+	r := strings.Split(res, " ")
+	if len(r) < 4 {
+		r = append(r, "")
+		has_body = false
+	}
+	response := Response{
+		responseStatus: r[0],
+		compression:    strings.Split(r[1], ","),
+		headers:        r[2],
+		body:           r[3],
+		hasBody:        has_body,
+	}
+	return response
+}
+
+func resMarshal(res Response) string {
+	var body int
+	compression := strings.Join(res.compression, ",")
+	if res.hasBody {
+		body = len(res.body)
+	} else {
+		body = 0
+	}
+	r := fmt.Sprintf("%s %s %s %b", res.responseStatus, compression, res.headers, body)
+	return r
 }
