@@ -38,5 +38,7 @@ WORKDIR /hobbits
 
 RUN cd parsers && ./build.sh
 
+ENV RUST_BACKTRACE=full
+
 CMD python test/run.py
 
