@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"bufio"
 	"fmt"
 	"os"
@@ -8,16 +9,20 @@ import (
 
 func main() {
 	reqres := os.Args[1]
+	len,err := strconv.Atoi(os.Args[2])
+	if err != nil{
+		panic(err)
+	}
 	// len, _ := strconv.Atoi(os.Args[2])
 
 	reader := bufio.NewReader(os.Stdin)
-	stdin, _ := reader.ReadString('\n')
-
+	buffer := make([]byte,len)
+	reader.Read(buffer)
 	if reqres == "request" {
-		fmt.Println(reqMarshal(reqParse(string(stdin))))
+		fmt.Printf(reqMarshal(reqParse(string(buffer))))
 	} else if reqres == "response" {
-		fmt.Println(resMarshal(resParse(stdin)))
+		fmt.Printf(resMarshal(resParse(string(buffer))))
 	} else {
-		println("invalid request response given")
+		fmt.Println("invalid request response given")
 	}
 }

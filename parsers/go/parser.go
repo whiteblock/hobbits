@@ -19,9 +19,9 @@ type Request struct {
 
 type Response struct {
 	responseStatus string
-	compression    []string
-	headers        string
-	body           string
+	compression    string
+	headers        []byte
+	body           []byte
 	hasBody        bool
 }
 
@@ -29,16 +29,15 @@ func reqParse(req string) Request {
 	res := strings.Split(req, "\n")
 
 	reqLine := res[0]
-	payload := res[1]
+	payload := strings.Join(res[1:],"\n")
 	r := strings.Split(reqLine, " ")
 	if len(r) < 8 {
 		r = append(r, " ")
 	}
-
 	headersLen, _ := strconv.Atoi(r[5])
 	bodyLen, _ := strconv.Atoi(r[6])
 	headers := payload[0:headersLen]
-	body := payload[headersLen:bodyLen]
+	body := payload[headersLen:headersLen+bodyLen]
 
 	request := Request{
 		proto:               r[0],
@@ -55,43 +54,64 @@ func reqParse(req string) Request {
 
 func reqMarshal(req Request) string {
 	resCompression := strings.Join(req.responseCompression, ",")
-	headLen := strconv.Itoa(len(req.headers))
-	bodyLen := strconv.Itoa(len(req.body))
 	var headOnlyIndicator string
 	if req.headOnlyIndicator {
 		headOnlyIndicator = " H"
 	} else {
 		headOnlyIndicator = ""
 	}
-	r := fmt.Sprintf("%s %s %s %s %s %s %s%s%s%s", req.proto, req.version, req.command, req.compression, resCompression, headLen, bodyLen, headOnlyIndicator, string(req.headers), string(req.body))
+	requestLine := fmt.Sprintf("%s %s %s %s %s %d %d%s",
+		req.proto, 
+		req.version, 
+		req.command, 
+		req.compression, 
+		resCompression,
+		len(req.headers),
+		len(req.body),
+		headOnlyIndicator)
+	
+	r := fmt.Sprintf("%s\n%s%s",requestLine,string(req.headers), string(req.body))
 	return r
 }
 
 func resParse(res string) Response {
-	var has_body bool
-	r := strings.Split(res, " ")
-	if len(r) < 4 {
-		r = append(r, "")
-		has_body = false
+	hasBody := false
+	tmp := strings.Split(res,"\n")
+
+	resLine := tmp[0]
+	resBody := strings.Join(tmp[1:],"\n")
+	responseLineArr := strings.Split(resLine, " ")
+	headerLen,err := strconv.Atoi(responseLineArr[2])
+	if err != nil{
+		panic(err)
+	}
+	header := resBody[0:headerLen]
+	body := ""
+	if len(responseLineArr) == 4 {
+		hasBody = true
+		bodyLen,err := strconv.Atoi(responseLineArr[3])
+		if err != nil{
+			panic(err)
+		}
+		body = resBody[headerLen:(headerLen+bodyLen)]
 	}
 	response := Response{
-		responseStatus: r[0],
-		compression:    strings.Split(r[1], ","),
-		headers:        r[2],
-		body:           r[3],
-		hasBody:        has_body,
+		responseStatus: responseLineArr[0],
+		compression:    responseLineArr[1],
+		headers:        []byte(header),
+		body:           []byte(body),
+		hasBody:        hasBody,
 	}
 	return response
 }
 
 func resMarshal(res Response) string {
-	var body int
-	compression := strings.Join(res.compression, ",")
+
+	out := fmt.Sprintf("%s %s %d", res.responseStatus, res.compression, len(res.headers))
+
 	if res.hasBody {
-		body = len(res.body)
-	} else {
-		body = 0
+		out += fmt.Sprintf(" %d",len(res.body));
 	}
-	r := fmt.Sprintf("%s %s %s %b", res.responseStatus, compression, res.headers, body)
-	return r
+	out += fmt.Sprintf("\n%s%s",string(res.headers),string(res.body))
+	return out
 }
