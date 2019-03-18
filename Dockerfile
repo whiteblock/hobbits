@@ -18,7 +18,8 @@ RUN apt install -y --no-install-recommends \
     racket \
     rustc \
     snapd \
-    wget 
+    wget \
+    erlang
 
 
 WORKDIR /tmp
