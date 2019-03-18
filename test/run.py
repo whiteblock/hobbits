@@ -21,6 +21,7 @@ FIELDS = [
 LANGS = {
     'cpp': [ './parsers/cpp/test' ],
     'd': ['./parsers/d/main'],
+    'erlang': ['./parsers/erlang/test'],
     'php': ['php','./parsers/php/test.php'],
     'rs': [ './parsers/rs/parser' ],
     'racket': ['./parsers/racket/test'],
