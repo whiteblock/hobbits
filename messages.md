@@ -92,9 +92,8 @@ This response has no body definition.
 
 ### `0x15` SEND_BLOCK_BODY
 
-````python
+```python
 {
-    'slot:' 'uint64', 
     'randao_reveal': 'bytes96',
     'eth1_data': Eth1Data,
     'proposer_slashings': [ProposerSlashing],
