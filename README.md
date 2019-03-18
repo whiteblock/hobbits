@@ -1,6 +1,6 @@
 # Hobbits, or There and Back Again
 
-A Lightweight, Multiclient Wire Protocol For Web3 Communications
+A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 
 ## Specifications
 
