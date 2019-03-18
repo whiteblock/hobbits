@@ -1,9 +1,6 @@
 use std::env;
 use std::io::{self, Read};
 
-
-static EXAMPLE_PING_REQ: &[u8] = b"EWP 0.1 PING none none 0 5\n12345";
-
 #[derive(Clone,Debug)]
 pub struct EWPRequest {
     pub version: String,
@@ -81,10 +78,15 @@ pub struct EWPResponse {
 }
 impl EWPResponse {
     pub fn parse(res: &[u8]) -> Result<Self, std::io::Error> {
-        let parts: Vec< &[u8] > = res.splitn(2, |chr| chr == &('\n' as u8) ).collect();
-        let res_line: String = String::from_utf8(parts[0].to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let res_line_end_idx = res.iter().position(|b| *b == ('\n' as u8))
+            .ok_or_else(||
+                std::io::Error::new(std::io::ErrorKind::Other, "response newline terminator missing")
+            )
+        ?;
+        let res_line_raw = &res[..res_line_end_idx];
+        let payload = &res[(res_line_end_idx + 1)..];
+        let res_line: String = String::from_utf8(res_line_raw.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let r: Vec<String> = res_line.splitn(4, |chr| chr == ' ').map(|s| s.to_string()).collect();
-        let payload = parts.get(1);
         let code = r[0].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let headers_len = r[2].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let body_len = r[3].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
@@ -92,14 +94,8 @@ impl EWPResponse {
         Ok(Self {
             code,
             compression: r[1].clone(),
-            headers: match payload {
-                Some(payload) => payload[0..headers_len].to_vec(),
-                None => vec![],
-            },
-            body: match payload {
-                Some(payload) => payload[headers_len..body_len].to_vec(),
-                None => vec![],
-            }
+            headers: payload[0..headers_len].to_vec(),
+            body: payload[headers_len..body_len].to_vec(),
         })
     }
     pub fn marshal(&self) -> Vec<u8> {
