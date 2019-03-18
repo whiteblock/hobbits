@@ -15,14 +15,20 @@ pub struct EWPRequest {
 
 impl EWPRequest {
     pub fn parse(req: &[u8]) -> Result<Self, std::io::Error> {
-        let parts: Vec< &[u8] > = req.splitn(2, |chr| chr == &('\n' as u8) ).collect();
-        let req_line: String = String::from_utf8(parts[0].to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let req_line_end_idx = req.iter().position(|b| *b == ('\n' as u8))
+            .ok_or_else(||
+                std::io::Error::new(std::io::ErrorKind::Other, "request newline terminator missing")
+            )
+        ?;
+        let req_line_raw = &req[..req_line_end_idx];
+        let payload = &req[(req_line_end_idx + 1)..];
+        let req_line: String = String::from_utf8(req_line_raw.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+
         let r: Vec<String> = req_line.splitn(8, |chr| chr == ' ').map(|s| s.to_string()).collect();
-        let payload = parts.get(1);
         assert!(&r[0] == "EWP");
         assert!(&r[1] == "0.1");
-        let headers_len = r[5].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let body_len = r[6].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let headers_len: usize = r[5].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let body_len: usize = r[6].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
 
         Ok(Self {
             version: "0.1".to_string(),
@@ -30,14 +36,8 @@ impl EWPRequest {
             compression: r[3].clone(),
             response_compression: r[4].split(|chr| chr == ',').map(|s| s.to_string()).collect(),
             head_only_indicator: r.get(7) == Some(&"H".to_string()),
-            headers: match payload {
-                Some(payload) => payload[0..headers_len].to_vec(),
-                None => vec![],
-            },
-            body: match payload {
-                Some(payload) => payload[headers_len..body_len].to_vec(),
-                None => vec![],
-            }
+            headers: payload[0..headers_len].to_vec(),
+            body: payload[headers_len..(headers_len + body_len)].to_vec(),
         })
     }
     pub fn marshal(&self) -> Vec<u8> {
@@ -83,19 +83,19 @@ impl EWPResponse {
                 std::io::Error::new(std::io::ErrorKind::Other, "response newline terminator missing")
             )
         ?;
-        let res_line_raw = &res[..(res_line_end_idx + 1)];
+        let res_line_raw = &res[..res_line_end_idx];
         let payload = &res[(res_line_end_idx + 1)..];
         let res_line: String = String::from_utf8(res_line_raw.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let r: Vec<String> = res_line.splitn(4, |chr| chr == ' ').map(|s| s.to_string()).collect();
         let code = r[0].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let headers_len = r[2].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let body_len = r[3].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let headers_len: usize = r[2].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let body_len: usize = r[3].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
 
         Ok(Self {
             code,
             compression: r[1].clone(),
             headers: payload[0..headers_len].to_vec(),
-            body: payload[headers_len..body_len].to_vec(),
+            body: payload[headers_len..(headers_len + body_len)].to_vec(),
         })
     }
     pub fn marshal(&self) -> Vec<u8> {
