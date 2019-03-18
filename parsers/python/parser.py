@@ -57,21 +57,10 @@ def res_parse(res):
         has_body = False
     else:
         has_body = True
-    res_status = res[0]
-    compression = res[1]
-    headers = res[2]
-    body = res[3]
-    
     response = Response(res[0],res[1],res[2],res[3],has_body)
     return response.__dict__
 
 def res_marshal(res):
     if isinstance(res,dict):
-        res_status = res.get("response_status")
-        compression = res.get("compression")
-        headers = res.get("headers")
         body = ("", " "+res.get("body"))[res.get("has_body")]
-        return ("{} {} {}{}").format(res_status, compression, headers, body)
-    elif isinstance(res,str):
-        parsed = res_parse(res)
-        return res_marshal(parsed)
+        return ("{} {} {}{}").format(res.get("response_status"), res.get("compression"), res.get("headers"), body)
