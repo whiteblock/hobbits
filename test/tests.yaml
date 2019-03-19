@@ -27,3 +27,29 @@
     marshalled: "200 none 9 10\n987654321\n\n\n\n\n\n\n\n\n\n"
   - desc: '9 byte header, 10 byte body, control character montage'
     marshalled: "200 none 9 10\n\n87654321\n\0\a\b\f\n\r\t\v\\"
+- suite: 'test different commands'
+  requests:
+  - desc: 'PING'
+    marshalled: "EWP 0.1 PING none none 0 0\n"
+  - desc: 'FOO'
+    marshalled: "EWP 0.1 FOO none none 0 0\n"
+  - desc: 'BAR'
+    marshalled: "EWP 0.1 BAR none none 0 0\n"
+  - desc: 'PONG'
+    marshalled: "EWP 0.1 PONG none none 0 0\n"
+  responses: []
+- suite: 'test different responses'
+  requests: []
+  responses:
+  - desc: '200'
+    marshalled: "200 none 0 0\n"
+  - desc: '400'
+    marshalled: "400 none 0 0\n"
+  - desc: '406'
+    marshalled: "406 none 0 0\n"
+  - desc: '407'
+    marshalled: "407 none 0 0\n"
+  - desc: '500'
+    marshalled: "500 none 0 0\n"
+  - desc: '501'
+    marshalled: "501 none 0 0\n"
