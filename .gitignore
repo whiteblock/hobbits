@@ -3,3 +3,17 @@
 /parsers/go/test
 /parsers/rs/parser
 *.pyc
+parsers/c/test
+parsers/d/ewp.o
+parsers/d/main
+parsers/d/main.o
+parsers/erlang/ewp_request.beam
+parsers/erlang/ewp_response.beam
+parsers/racket/compiled/
+parsers/racket/hobbit.rkt~
+parsers/racket/test
+parsers/racket/test.rkt~
+parsers/scheme/compiled/
+parsers/scheme/hobbit.scm~
+parsers/scheme/test
+parsers/scheme/test.scm~
