@@ -3,6 +3,7 @@
 /parsers/go/test
 /parsers/rs/parser
 *.pyc
+/parsers/python/main.py
 parsers/c/test
 parsers/d/ewp.o
 parsers/d/main
