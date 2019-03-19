@@ -52,3 +52,5 @@ Basic [benchmark results](https://gist.github.com/prestonvanloon/6663510164f967f
 ## Contributing
 
 Please create issues to document your critiques, suggestions, improvements, etc. We will use it as a discussion funnel to refine this specification and move forward towards a stable 1.0
+
+STEAL THIS CODE
