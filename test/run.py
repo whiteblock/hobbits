@@ -65,7 +65,7 @@ if __name__ == '__main__':
                 args.extend([ 'request', str(len(request['marshalled'])) ])
                 expected = request['marshalled']
 
-                def test_func(self, expected=expected):
+                def test_func(self, args=args, expected=expected):
                     actual = run_impl(args, expected)
                     self.assertEqual(actual, expected)
 
@@ -80,9 +80,10 @@ if __name__ == '__main__':
                 args.extend([ 'response', str(len(response['marshalled'])) ])
                 expected = response['marshalled']
 
-                def test_func(self, expected=expected):
+                def test_func(self, args=args, expected=expected):
                     actual = run_impl(args, expected)
                     self.assertEqual(actual, expected)
+
                 setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
