@@ -19,15 +19,15 @@ FIELDS = [
 ]
 
 LANGS = {
-    # 'c': ['./parsers/c/test'],
-    # 'cpp': [ './parsers/cpp/test' ],
-    # 'd': ['./parsers/d/main'],
-    # 'erlang': ['./parsers/erlang/test'],
-    # 'php': ['php','./parsers/php/test.php'],
-    # 'rs': [ './parsers/rs/parser' ],
-    # 'racket': ['./parsers/racket/test'],
-    # 'scheme':['./parsers/scheme/test'],
-    # 'python':['python', './parsers/python/test.py'],
+     'c': ['./parsers/c/test'],
+     'cpp': [ './parsers/cpp/test' ],
+     'd': ['./parsers/d/main'],
+     'erlang': ['./parsers/erlang/test'],
+     'php': ['php','./parsers/php/test.php'],
+     'rs': [ './parsers/rs/parser' ],
+     'racket': ['./parsers/racket/test'],
+     'scheme':['./parsers/scheme/test'],
+     'python':['python', './parsers/python/test.py'],
     'go':['go','run','./parsers/go/test.go', './parsers/go/parser.go'],
 }
 
