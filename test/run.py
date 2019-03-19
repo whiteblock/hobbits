@@ -19,6 +19,7 @@ FIELDS = [
 ]
 
 LANGS = {
+    'c': ['./parsers/c/test'],
     'cpp': [ './parsers/cpp/test' ],
     'd': ['./parsers/d/main'],
     'erlang': ['./parsers/erlang/test'],
