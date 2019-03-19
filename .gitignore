@@ -1,5 +1,5 @@
 .DS_Store
 /parsers/cpp/test*
-/parsers/go/parser
+/parsers/go/test
 /parsers/rs/parser
 *.pyc

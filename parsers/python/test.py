@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 
 from parser import (
@@ -13,8 +15,8 @@ chars = int(sys.argv[2])
 stdin = sys.stdin.read(chars)
 
 if reqres == "request":
-    print(req_marshal(req_parse(stdin)))
+    print(req_marshal(req_parse(stdin)),end='')
 elif reqres == "response":
-    print(res_marshal(res_parse(stdin)))
+    print(res_marshal(res_parse(stdin)),end='')
 else:
     print("invalid request/response input")

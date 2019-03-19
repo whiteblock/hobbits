@@ -64,9 +64,11 @@ if __name__ == '__main__':
                 args.extend(lang_args)
                 args.extend([ 'request', str(len(request['marshalled'])) ])
                 expected = request['marshalled']
-                actual = run_impl(args, expected)
 
-                test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
+                def test_func(self, args=args, expected=expected):
+                    actual = run_impl(args, expected)
+                    self.assertEqual(actual, expected)
+
                 setattr(DynamicTest, test_name, test_func)
 
             for response in suite['responses']:
@@ -77,9 +79,11 @@ if __name__ == '__main__':
                 args.extend(lang_args)
                 args.extend([ 'response', str(len(response['marshalled'])) ])
                 expected = response['marshalled']
-                actual = run_impl(args, expected)
 
-                test_func = lambda self, actual=actual, expected=expected: self.assertEqual(actual, expected)
+                def test_func(self, args=args, expected=expected):
+                    actual = run_impl(args, expected)
+                    self.assertEqual(actual, expected)
+
                 setattr(DynamicTest, test_name, test_func)
 
     unittest.main(verbosity=3)
