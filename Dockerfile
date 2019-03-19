@@ -18,7 +18,8 @@ RUN apt install -y --no-install-recommends \
     racket \
     rustc \
     snapd \
-    wget 
+    wget \
+    erlang
 
 
 WORKDIR /tmp
@@ -37,6 +38,8 @@ COPY test/ test/
 WORKDIR /hobbits
 
 RUN cd parsers && ./build.sh
+
+ENV RUST_BACKTRACE=full
 
 CMD python test/run.py
 

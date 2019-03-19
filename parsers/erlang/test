@@ -1,0 +1,21 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -pa ./parsers/erlang/
+
+main([Type,Length]) ->
+    Given = io:get_chars("", list_to_integer(Length)),
+    case Type of 
+        "response" ->
+            io:fwrite("~s",[ewp_response:marshal(ewp_response:parse(Given))]);
+        "request" -> 
+            io:fwrite("~s",[ewp_request:marshal(ewp_request:parse(Given))]);
+        _Else ->
+            io:fwrite("Invalid argument ~p~n",[Type])
+    end
+
+;
+
+main(_) ->
+    io:fwrite("Usage ./test <response|request> <input length>\n").
+
+
