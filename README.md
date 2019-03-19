@@ -39,7 +39,6 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
   * x86 asm
   * ruby
   * ada
-  * c
   * css3
  
 ## Running Tests
