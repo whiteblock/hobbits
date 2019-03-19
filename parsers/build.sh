@@ -16,7 +16,8 @@ pushd erlang
     erl -compile ewp_request.erl ewp_response.erl
 popd
 pushd go
-    go build parser.go
+    go build
+    mv ./go ./test
 popd
 
 # N/A
