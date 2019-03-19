@@ -15,6 +15,7 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 ## Implementations
 
 ### Demo Implementations
+ - [C](/parsers/c)
  - [C++](/parsers/cpp)
  - [D](/parsers/d)
  - [Erlang](/parsers/erlang)
