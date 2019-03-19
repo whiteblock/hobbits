@@ -13,7 +13,6 @@ func main() {
 	if err != nil{
 		panic(err)
 	}
-	// len, _ := strconv.Atoi(os.Args[2])
 
 	reader := bufio.NewReader(os.Stdin)
 	buffer := make([]byte,len)
