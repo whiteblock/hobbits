@@ -25,7 +25,7 @@ int ewp_response_parse(char* in,struct ewp_response* res)
     int index = index_of_char(in,'\n');
     char* response_line = substring(in,0,index);
     
-    char* response_body = (char*)(in + index);
+    char* response_body = (char*)(in + index+1);
 
     vector response = explode(" ",response_line);
 
@@ -62,31 +62,37 @@ char* ewp_response_marshal(struct ewp_response* res,size_t* size)
     char* intval;
     *size = 0;
     intval = ltoa(res->response_status);
-    char* out = strappend(' ',ltoa(res->response_status));
+    char* out = strappend(' ',intval);
     *size += strlen(out);   
     tmp = strappend(' ',res->compression);
     *size += strlen(tmp);
     out = concat(out,tmp, FIRST|SECOND);
     intval = ltoa(res->header_length);
-    tmp = strappend(' ',intval);
+    if(res->has_body){
+        
+        tmp = strappend(' ',intval);
+    }else{
+        tmp = intval;
+    }
+    
     *size += strlen(tmp);
     //free(intval);
     out = concat(out,tmp,FIRST | SECOND);
     if(res->has_body){
-        intval = ltoa(res->header_length);
-        tmp = strappend(' ',intval);
+        tmp = ltoa(res->body_length);
         *size += strlen(tmp);
         //free(intval);
-        out = concat(out,tmp,FIRST | SECOND);
+        out = concat(out,tmp,FIRST);
     }
     tmp = strappend('\n',out);
     *size += 1;
     free(out);
     out = tmp;
-    *size += res->header_length + res->body_length;
-    out = concat(out,res->header, FIRST);
-    out = concat(out,res->body, FIRST);
-   
+    
+    out = memsafe_concat(out,*size,res->header,res->header_length, FIRST);
+    *size += res->header_length;;
+    out = memsafe_concat(out,*size,res->body,res->body_length, FIRST);
+    *size += res->body_length;
     return out;
 }
 

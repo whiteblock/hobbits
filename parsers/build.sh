@@ -1,5 +1,9 @@
 #!/bin/bash -xeu
 
+pushd c
+    make re
+popd 
+
 pushd cpp
     make
 popd

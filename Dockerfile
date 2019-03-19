@@ -19,7 +19,8 @@ RUN apt install -y --no-install-recommends \
     rustc \
     snapd \
     wget \
-    erlang
+    erlang \
+    haskell-platform
 
 
 WORKDIR /tmp
