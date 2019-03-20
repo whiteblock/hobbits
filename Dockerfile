@@ -20,7 +20,9 @@ RUN apt install -y --no-install-recommends \
     snapd \
     wget \
     erlang \
-    haskell-platform
+    haskell-platform \
+    clisp-dev \
+    cl-quicklisp
 
 
 WORKDIR /tmp
