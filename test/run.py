@@ -29,6 +29,7 @@ LANGS = {
      'racket': ['./parsers/racket/test'],
      'scheme':['./parsers/scheme/test'],
      'python':['python', './parsers/python/test.py'],
+     'perl': ['perl', '-I' './parsers/perl', './parsers/perl/test.pl'],
      'go':['go','run','./parsers/go/test.go', './parsers/go/parser.go'],
 }
 
