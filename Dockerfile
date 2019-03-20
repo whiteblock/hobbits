@@ -1,8 +1,11 @@
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update
-RUN apt install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
     curl \
@@ -20,7 +23,8 @@ RUN apt install -y --no-install-recommends \
     snapd \
     wget \
     erlang \
-    haskell-platform
+    haskell-platform \
+    openjdk-11-jre
 
 
 WORKDIR /tmp
