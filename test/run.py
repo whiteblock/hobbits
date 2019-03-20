@@ -23,6 +23,7 @@ LANGS = {
      'cpp': [ './parsers/cpp/test' ],
      'd': ['./parsers/d/main'],
      'erlang': ['./parsers/erlang/test'],
+     'java':['java','./parsers/java/Parser.java'],
      'php': ['php','./parsers/php/test.php'],
      'rs': [ './parsers/rs/parser' ],
      'racket': ['./parsers/racket/test'],
@@ -30,6 +31,7 @@ LANGS = {
      'python':['python', './parsers/python/test.py'],
      'go':['go','run','./parsers/go/test.go', './parsers/go/parser.go'],
 }
+
 
 class DynamicTest(unittest.TestCase):
     longMessage = True
