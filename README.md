@@ -23,6 +23,7 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
  - [Go](/parsers/go)
  - [Java](/parsers/java)
  - [Javascript](/parsers/js)
+ - [Perl](/parsers/perl)
  - [PHP](/parsers/php)
  - [Python](/parsers/python)
  - [Racket](/parsers/racket)
@@ -36,7 +37,6 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 
 ### Missing languages
   * brainfuck
-  * perl
   * x86 asm
   * ruby
   * ada

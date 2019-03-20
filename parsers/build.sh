@@ -26,6 +26,10 @@ popd
 #pushd js
 #popd
 
+pushd perl
+    prove -v parser.t
+popd
+
 # N/A
 #pushd php
 #popd
