@@ -142,4 +142,26 @@
 ;(write-string (marshal-response (parse-response (format nil "200 none 5 5~C1234567890" #\linefeed))))
 
 
-(write-string (marshal-request (parse-request (format nil "EWP 0.1 PING none none 2 3~C55555" #\linefeed))))
+;(write-string (marshal-request (parse-request (format nil "EWP 0.1 PING none none 2 3~C55555" #\linefeed))))
+
+(defun read-x (chars)
+  (if (equal chars 0)
+    '()
+    (append (list (read-char)) (read-x (- chars 1)))
+    )
+  )
+
+(let (
+    (input-type (car *args*))
+    (input-length (parse-integer (cadr *args*)))
+    
+  )
+  ;(print input-length)
+  (let ((usr-input (list-to-string (read-x input-length))))
+    ;(print usr-input)
+    (if (string= input-type "response")
+      (write-string (marshal-response (parse-response usr-input)))
+    (if (string= input-type "request")
+      (write-string (marshal-request (parse-request usr-input)))
+    )))
+)
