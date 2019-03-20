@@ -6,6 +6,7 @@
 
 ```python
 {
+    'protocol': 'string'
     'version': 'string',
     'command': 'string',
     'compression': 'string',
