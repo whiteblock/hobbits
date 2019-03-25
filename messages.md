@@ -13,19 +13,28 @@
 }
 ```
 
-## Ping / Pong
+## `0x01` GOODBYE
 
-### `0x01` PING
+```python
+{
+  'reason': 'uint64'
+}
 
-This request has no body definition.
+```
 
-### `0x02` PONG
+## `0x02` GET_STATUS
+```python
+{
+  'sha': 'bytes32'
+  'user_agent': 'bytes'
+  'timestamp': 'uint64'
+}
+```
 
-This response has no body definition.
+## `0x0A` BLOCK_ROOTS
 
-## Block Root
 
-### `0x10` REQUEST_BLOCK_ROOT
+###Request
 
 ```python
 {
@@ -37,7 +46,7 @@ This response has no body definition.
 }
 ```
 
-### `0x11` SEND_BLOCK_ROOT
+###Response
 
 ```python
 [
@@ -45,40 +54,14 @@ This response has no body definition.
     'block_root': 'bytes32', 
     'slot': 'uint64'
   },
-  …
+  ...
 ]
 ```
 
-## Block Header
 
-### `0x12` REQUEST_BLOCK_HEADER
+## `0x0B` BEACON_BLOCK_HEADERS
 
-```python
-{
-  'start_root': 'bytes32'
-  'start_slot': 'uint64'
-  'max': 'uint64'
-  'skip': 'uint64'
-  'direction': 'uint8' # 0x01 is forward, 0x00 is backwards
-}
-```
-
-### `0x13` SEND_BLOCK_HEADER
-
-```python
-{
-    'slot': 'uint64',
-    'parent_root': 'bytes32',
-    'state_root': 'bytes32',
-    'randao_reveal': 'bytes96',
-    'eth1_data': Eth1Data,
-    'signature': 'bytes96'
-}
-```
-
-## Block Body
-
-### `0x14` REQUEST_BLOCK_BODY
+###Request
 
 ```python
 {
@@ -90,20 +73,44 @@ This response has no body definition.
 }
 ```
 
-### `0x15` SEND_BLOCK_BODY
+###Response 
+```python
+  'headers': '[]BeaconBlockHeader'
+```
+
+
+## `0x0C`  BLOCK_BODIES
+
+### Request
 
 ```python
-{
-    'randao_reveal': 'bytes96',
-    'eth1_data': Eth1Data,
-    'proposer_slashings': [ProposerSlashing],
-    'attester_slashings': [AttesterSlashing],
-    'attestations': [Attestation],
-    'deposits': [Deposit],
-    'voluntary_exits': [VoluntaryExit],
-    'transfers': [Transfer],
-    'header_signature:' 'bytes96'
-}
+[
+  {
+    'start_root': 'bytes32'
+    'start_slot': 'uint64'
+    'max': 'uint64'
+    'skip': 'uint64'
+    'direction': 'uint8' # 0x01 is forward, 0x00 is backwards
+  }
+]
+```
+
+### Response
+
+```python
+[
+  {
+      'randao_reveal': 'bytes96',
+      'eth1_data': Eth1Data,
+      'proposer_slashings': [ProposerSlashing],
+      'attester_slashings': [AttesterSlashing],
+      'attestations': [Attestation],
+      'deposits': [Deposit],
+      'voluntary_exits': [VoluntaryExit],
+      'transfers': [Transfer],
+      'header_signature:' 'bytes96'
+  }
+]
 ```
 
 #### The following definitions are lined to v0.5.0 of the Beacon Chain Spec:
