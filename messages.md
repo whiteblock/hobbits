@@ -59,7 +59,7 @@
 ```
 
 
-## `0x0B` BEACON_BLOCK_HEADERS
+## `0x0B` BLOCK_HEADERS
 
 ### Request
 
