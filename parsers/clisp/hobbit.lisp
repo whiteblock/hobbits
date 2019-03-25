@@ -1,4 +1,4 @@
-(load "/home/appo/quicklisp/setup.lisp")
+(load "~/quicklisp/setup.lisp")
 (ql:quickload "cl-ppcre" :silent t)
 
 (defun list-to-string (lst)
@@ -146,19 +146,21 @@
 
 (defun read-x (chars)
   (if (equal chars 0)
-    '()
-    (append (list (read-char)) (read-x (- chars 1)))
+    ""
+    (let ((chr (read-char))) 
+       (concatenate 'string (string chr) (read-x (- chars 1))))
     )
   )
 
+;(setf (readtable-case *readtable*) :preserve)
+
 (let (
-    (input-type (car *args*))
-    (input-length (parse-integer (cadr *args*)))
+    (input-type (car *ARGS*))
+    (input-length (parse-integer (cadr *ARGS*)))
     
   )
   ;(print input-length)
-  (let ((usr-input (list-to-string (read-x input-length))))
-    ;(print usr-input)
+  (let ((usr-input (read-x input-length)))
     (if (string= input-type "response")
       (write-string (marshal-response (parse-response usr-input)))
     (if (string= input-type "request")
