@@ -34,7 +34,7 @@
 ## `0x0A` BLOCK_ROOTS
 
 
-###Request
+### Request
 
 ```python
 {
@@ -46,7 +46,7 @@
 }
 ```
 
-###Response
+### Response
 
 ```python
 [
@@ -61,7 +61,7 @@
 
 ## `0x0B` BEACON_BLOCK_HEADERS
 
-###Request
+### Request
 
 ```python
 {
@@ -73,7 +73,7 @@
 }
 ```
 
-###Response 
+### Response 
 ```python
   'headers': '[]BeaconBlockHeader'
 ```
