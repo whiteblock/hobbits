@@ -66,10 +66,11 @@
 
   (let ((req-line (parse-request-line (car req-split))))
    (let ((payload (if (equal (length req-split) 1) "" (arr-to-string (cdr req-split) "\n"))) )
+    ;(print req-line)
     (let ((body-len (parse-integer (nth 6 req-line))))
       
      (let ((header-len (parse-integer (nth 5 req-line))))
-
+        ;(print header-len)
         (append
           (reverse
             (if (equal 8 (length req-line)) (cdddr (reverse req-line)) (cddr (reverse req-line))))
@@ -90,7 +91,7 @@
       " "
       (write-to-string (length (nth 6 request)))
       " "
-      (write-to-string (length (nth 6 request)))
+      (write-to-string (length (nth 7 request)))
       (if (nth 5 request) " H" "" )
       '(#\linefeed)
       (nth 6 request) (nth 7 request))
