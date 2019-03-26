@@ -1,5 +1,35 @@
 # Messages
 
+These messages are used to define an application protocol for Ethereum 2.0.
+These messages define a RPC protocol for clients to interact with each other.
+
+# Envelope
+
+All messages follow the envelope standard to Hobbits as described in [protocol.md].
+
+This application protocol is classified under the `RPC` command.
+
+The body of the RPC calls must conform to:
+```
+{ 
+  method_id: uint16 // byte representing the method
+  id: uint64 // id of the request
+  body: // body of the request itself
+}
+```
+
+Example (showing the bson snappy data as json):
+```
+EWP 0.2 RPC snappy bson 0 12
+{
+  "method_id": 0x00,
+  "id": 1,
+  "body": {
+    "reason": 42
+  }
+}
+```
+
 ## `0x00` HELLO
 
 ```python
@@ -31,10 +61,7 @@
 }
 ```
 
-## `0x0A` BLOCK_ROOTS
-
-
-### Request
+## `0x0A` GET_BLOCK_ROOTS
 
 ```python
 {
@@ -46,7 +73,7 @@
 }
 ```
 
-### Response
+### `0x0B` BLOCK_ROOTS
 
 ```python
 [
@@ -59,9 +86,7 @@
 ```
 
 
-## `0x0B` BLOCK_HEADERS
-
-### Request
+## `0x0C` GET_BLOCK_HEADERS
 
 ```python
 {
@@ -73,15 +98,14 @@
 }
 ```
 
-### Response 
+## `0x0D` BLOCK_HEADERS
+
 ```python
   'headers': '[]BeaconBlockHeader'
 ```
 
 
-## `0x0C`  BLOCK_BODIES
-
-### Request
+## `0x0E`  GET_BLOCK_BODIES
 
 ```python
 [
@@ -95,7 +119,7 @@
 ]
 ```
 
-### Response
+## `0x0F`  BLOCK_BODIES
 
 ```python
 [
@@ -113,7 +137,7 @@
 ]
 ```
 
-#### The following definitions are lined to v0.5.0 of the Beacon Chain Spec:
+#### The following definitions are aligned to v0.5.0 of the Beacon Chain Spec:
 
 - [ProposerSlashing](https://github.com/ethereum/eth2.0-specs/blob/v0.5.0/specs/core/0_beacon-chain.md#proposerslashing)  
 - [AttesterSlashing](https://github.com/ethereum/eth2.0-specs/blob/v0.5.0/specs/core/0_beacon-chain.md#attesterslashing)  
