@@ -2,7 +2,11 @@
 
 pushd c
     make re
-popd 
+popd
+
+pushd clisp
+    clisp -i "~/quicklisp/setup.lisp" -i init.lisp -c hobbit.lisp
+popd
 
 pushd cpp
     make
