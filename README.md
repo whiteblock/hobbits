@@ -4,8 +4,8 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 
 ## Specifications
 
-### EWP 0.1
- - [EBNF Grammar](/Ethereum-Wire-Protocol-0.1.EBNF)
+### EWP 0.2
+ - [EBNF Grammar](/Ethereum-Wire-Protocol-0.2.EBNF)
  - [Protocol](/protocol.md)
  - [Response Codes](/response-codes.md)
  
