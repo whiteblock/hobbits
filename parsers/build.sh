@@ -5,6 +5,7 @@ pushd c
 popd
 
 pushd clisp
+    clisp setup.lisp
     clisp -i "~/quicklisp/setup.lisp" -i init.lisp -c hobbit.lisp
 popd
 
