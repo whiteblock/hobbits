@@ -1,4 +1,4 @@
-(load "~/quicklisp/setup.lisp")
+;(load "~/quicklisp/setup.lisp")
 (ql:quickload "cl-ppcre" :silent t)
 
 (defun list-to-string (lst)
