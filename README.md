@@ -10,7 +10,7 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
  - [Response Codes](/response-codes.md)
  
 ### ETH 2.0 Protocol
- - [Messages](/messages.md)
+ - [Messages](/rpc-messages.md)
 
 ## Implementations
 
