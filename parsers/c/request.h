@@ -12,9 +12,6 @@ struct ewp_request {
     char* proto;
     char* version;
     char* command;
-    char* compression;
-    vector response_compression;
-    unsigned int  head_only_indicator : 1;
     size_t header_len;
     size_t body_len;
     char* header;
@@ -46,16 +43,10 @@ int ewp_request_parse(char* in,struct ewp_request* req)
     req->command = (char*)calloc(strlen(tmp)+1,sizeof(char));
     strcpy(req->command,tmp);
 
-    tmp = (char*)vector_get(request,3);
-    req->compression = (char*)calloc(strlen(tmp)+1,sizeof(char));
-    strcpy(req->compression,tmp);
-
-    req->response_compression = explode(",",(char*)vector_get(request,4));
-    req->head_only_indicator = (vector_length(request) == 8 && ((char*)vector_get(request,7))[0] == 'H');
     if(index != -1){
         char* request_body = substring(in,index+1,strlen(in));
-        req->header_len = atoi((char*)vector_get(request,5));
-        req->body_len = atoi((char*)vector_get(request,6));
+        req->header_len = atoi((char*)vector_get(request,3));
+        req->body_len = atoi((char*)vector_get(request,4));
         req->header = substring(request_body,0,req->header_len);
         req->body = substring(request_body,req->header_len,req->body_len);
         free(request_body);
@@ -70,36 +61,13 @@ char* ewp_request_marshal(struct ewp_request* req,size_t* size)
 
     char* tmp;
     char* out =strappend(' ', req->proto);
-   *size += strlen(out);
+    *size += strlen(out);
     tmp = strappend(' ',req->version);
     *size += strlen(tmp);
     out = concat(out,tmp, SECOND);
     tmp = strappend(' ',req->command);
     *size += strlen(tmp);
     out = concat(out,tmp,FIRST | SECOND);
-    tmp = strappend(' ',req->compression);
-    *size += strlen(tmp);
-    out = concat(out,tmp,FIRST | SECOND);
-
-    size_t length = vector_length(req->response_compression);
-    for (size_t i = 0; i < length; i++){
-        if(i != 0){
-            tmp = strappend(',',(char*)vector_get(req->response_compression,i));
-            *size += strlen(tmp);
-            out = concat(out,tmp,FIRST | SECOND);
-        }else{
-            tmp = (char*)vector_get(req->response_compression,i);
-            *size += strlen(tmp);
-            out = concat(out,tmp,FIRST);
-        }
-
-        if( i == length - 1){
-            tmp = strappend(' ',out);
-            free(out);
-            out = tmp;
-            *size += 1;
-        }
-    }
 
     tmp = strappend(' ' ,ltoa(req->header_len));
     *size += strlen(tmp);
@@ -109,21 +77,16 @@ char* ewp_request_marshal(struct ewp_request* req,size_t* size)
     *size += strlen(tmp);
     out = concat(out,tmp,FIRST);
 
-    if(req->head_only_indicator == 1){
-        out = concat(out," H\n",FIRST);
-        *size += 3;
-    }else{
-        tmp = strappend('\n',out);
-        free(out);
-        out = tmp;
-        *size += 1;
+    tmp = strappend('\n',out);
+    free(out);
+    out = tmp;
+    *size += 1;
 
-        tmp = memsafe_concat(req->header,req->header_len,req->body,req->body_len,0);
+    tmp = memsafe_concat(req->header,req->header_len,req->body,req->body_len,0);
        
-        out = memsafe_concat(out,*size,tmp,req->header_len + req->body_len,FIRST|SECOND);
-        *size += req->header_len + req->body_len;
+    out = memsafe_concat(out,*size,tmp,req->header_len + req->body_len,FIRST|SECOND);
+    *size += req->header_len + req->body_len;
         
-    }
     return out;
 }
 

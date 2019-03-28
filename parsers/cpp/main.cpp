@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <istream>
 #include "request.h"
-#include "response.h"
 
 using namespace std;
 
@@ -28,11 +27,9 @@ int main(int argc,char** argv)
 {
     
     if(argc == 1){
-        hobbit::ewp_request req(string("EWP 0.1 PING none none 0 5\n12345"));
-        hobbit::ewp_response res(string("200 none 5 5\n1234512345"));
+        hobbit::ewp_request req(string("EWP 0.2 PING 0 5\n12345"));
 
         cout<<req.marshal()<<endl<<endl;
-        cout<<res.marshal()<<endl<<endl;
         return EXIT_SUCCESS;
     }
 
@@ -46,9 +43,6 @@ int main(int argc,char** argv)
     if(type == "request"){
         hobbit::ewp_request req(input);
         cout<<req.marshal();
-    }else if(type == "response"){
-        hobbit::ewp_response res(input);
-        cout<<res.marshal();
     }else{
         cout<<"Unknown option"<<endl;
     }

@@ -5,7 +5,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "request.h"
-#include "response.h"
 
 
 int main(int argc,char** argv)
@@ -22,15 +21,7 @@ int main(int argc,char** argv)
         return EXIT_FAILURE;
     }
 
-    if(strcmp(argv[1],"response") == 0 ){
-        struct ewp_response* resp = (struct ewp_response*)malloc(sizeof(struct ewp_response));
-        if(ewp_response_parse(buffer,resp) != 0){
-            write(2,"Parse failed\n",13);
-            return EXIT_FAILURE;
-        }
-        char* out = ewp_response_marshal(resp,&output_size);
-        write(1,out,output_size);
-    }else if (strcmp(argv[1],"request") == 0){
+    if (strcmp(argv[1],"request") == 0){
         struct ewp_request* req = (struct ewp_request*)malloc(sizeof(struct ewp_request));
         if(ewp_request_parse(buffer,req) != 0){
             write(2,"Parse failed\n",13);

@@ -1,6 +1,5 @@
 <?php
 
-require_once("response.php");
 require_once("request.php");
 
 if(sizeof($argv) != 3){
@@ -16,11 +15,7 @@ $ewp = fread($resSTDIN,$size);
 
 fclose($resSTDIN);
 
-if($type == "response"){
-    $test = new ewp_response;
-    $test->parse($ewp);
-    echo $test->marshal();
-}else if($type == "request"){
+if($type == "request"){
     $test = new ewp_request;
     $test->parse($ewp);
     echo $test->marshal();

@@ -1,55 +1,27 @@
 - suite: 'Basic Sanity'
   requests:
-  - desc: 'head only indicator enabled'
-    marshalled: "EWP 0.1 PING none none 0 0 H\n"
-  - desc: 'head only indicator omitted'
-    marshalled: "EWP 0.1 PING none none 0 0\n"
+  - desc: 'no body'
+    marshalled: "EWP 0.2 PING 0 0\n"
   - desc: '10 byte body'
-    marshalled: "EWP 0.1 PING none none 0 10\n0123456789"
+    marshalled: "EWP 0.2 PING 0 10\n0123456789"
   - desc: '10 byte header'
-    marshalled: "EWP 0.1 PING none none 10 0\n0123456789"
+    marshalled: "EWP 0.2 PING 10 0\n0123456789"
   - desc: '9 byte header, 10 byte body'
-    marshalled: "EWP 0.1 PING none none 9 10\n9876543210123456789"
+    marshalled: "EWP 0.2 PING 9 10\n9876543210123456789"
   - desc: '9 byte header, 10 byte body, extra newlines'
-    marshalled: "EWP 0.1 PING none none 9 10\n\n876543210123456\n89"
+    marshalled: "EWP 0.2 PING 9 10\n\n876543210123456\n89"
   - desc: '9 byte header, 10 byte body, extra extra newlines'
-    marshalled: "EWP 0.1 PING none none 9 10\n\n87654321\n\n\n\n\n\n\n\n\n\n"
+    marshalled: "EWP 0.2 PING 9 10\n\n87654321\n\n\n\n\n\n\n\n\n\n"
   - desc: '9 byte header, 10 byte body, control character montage'
-    marshalled: "EWP 0.1 PING none none 9 10\n\n87654321\n\0\a\b\f\n\r\t\v\\"
-  responses:
-  - desc: '200 -- basic'
-    marshalled: "200 none 0 0\n"
-  - desc: '10 byte header'
-    marshalled: "200 none 10 0\n0123456789"
-  - desc: '10 byte body'
-    marshalled: "200 none 0 10\n0123456789"
-  - desc: '9 byte header, 10 byte body, newline hell'
-    marshalled: "200 none 9 10\n987654321\n\n\n\n\n\n\n\n\n\n"
-  - desc: '9 byte header, 10 byte body, control character montage'
-    marshalled: "200 none 9 10\n\n87654321\n\0\a\b\f\n\r\t\v\\"
+    marshalled: "EWP 0.2 PING 9 10\n\n87654321\n\0\a\b\f\n\r\t\v\\"
 - suite: 'test different commands'
   requests:
   - desc: 'PING'
-    marshalled: "EWP 0.1 PING none none 0 0\n"
+    marshalled: "EWP 0.2 PING 0 0\n"
   - desc: 'FOO'
-    marshalled: "EWP 0.1 FOO none none 0 0\n"
+    marshalled: "EWP 0.2 FOO 0 0\n"
   - desc: 'BAR'
-    marshalled: "EWP 0.1 BAR none none 0 0\n"
+    marshalled: "EWP 0.2 BAR 0 0\n"
   - desc: 'PONG'
-    marshalled: "EWP 0.1 PONG none none 0 0\n"
+    marshalled: "EWP 0.2 PONG 0 0\n"
   responses: []
-- suite: 'test different responses'
-  requests: []
-  responses:
-  - desc: '200'
-    marshalled: "200 none 0 0\n"
-  - desc: '400'
-    marshalled: "400 none 0 0\n"
-  - desc: '406'
-    marshalled: "406 none 0 0\n"
-  - desc: '407'
-    marshalled: "407 none 0 0\n"
-  - desc: '500'
-    marshalled: "500 none 0 0\n"
-  - desc: '501'
-    marshalled: "501 none 0 0\n"

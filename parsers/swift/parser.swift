@@ -3,9 +3,6 @@ import Foundation
 struct Request {
     let version: String
     let command: String
-    let compression: String
-    let responseCompression: [String]
-    let headOnlyIndicator: Bool
     let headers: [UInt8]
     let body: [UInt8]
 }
@@ -31,12 +28,9 @@ func parse(request: String) -> Request {
     return Request(
         version: String(r[1]),
         command: String(r[2]),
-        compression: String(r[3]),
-        responseCompression: String(r[4]).split(separator: ",").map { return String($0) },
-        headOnlyIndicator: String(r[7]) == "H",
         headers: [UInt8](headers.utf8),
         body: [UInt8](body.utf8)
     )
 }
 
-print(parse(request: "EWP 0.1 PING none none 0 5\n12345"))
+print(parse(request: "EWP 0.2 PING 0 5\n12345"))
