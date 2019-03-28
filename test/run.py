@@ -12,9 +12,9 @@ from subprocess import Popen, PIPE
 import unittest
 import yaml
 
-VERSION = '0.1'
+VERSION = '0.2'
 FIELDS = [
-    "version", "command", "compression", "response-compression",
+    "version", "command", "compression",
     "head-only", "headers", "body"
 ]
 
@@ -68,21 +68,6 @@ if __name__ == '__main__':
                 args.extend(lang_args)
                 args.extend([ 'request', str(len(request['marshalled'])) ])
                 expected = request['marshalled']
-
-                def test_func(self, args=args, expected=expected):
-                    actual = run_impl(args, expected)
-                    self.assertEqual(actual, expected)
-
-                setattr(DynamicTest, test_name, test_func)
-
-            for response in suite['responses']:
-                desc = re.sub('[ -]', '_', response['desc']).lower()
-                test_name = "_".join([ 'test', lang, suite_name, 'response', desc ])
-
-                args = []
-                args.extend(lang_args)
-                args.extend([ 'response', str(len(response['marshalled'])) ])
-                expected = response['marshalled']
 
                 def test_func(self, args=args, expected=expected):
                     actual = run_impl(args, expected)

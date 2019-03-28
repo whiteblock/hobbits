@@ -5,9 +5,6 @@ use std::io::{self, Read};
 pub struct EWPRequest {
     pub version: String,
     pub command: String,
-    pub compression: String,
-    pub response_compression: Vec<String>,
-    pub head_only_indicator: bool,
     pub headers: Vec<u8>,
     pub body: Vec<u8>
 }
@@ -26,22 +23,18 @@ impl EWPRequest {
 
         let r: Vec<String> = req_line.splitn(8, |chr| chr == ' ').map(|s| s.to_string()).collect();
         assert!(&r[0] == "EWP");
-        assert!(&r[1] == "0.1");
+        assert!(&r[1] == "0.2");
         let headers_len: usize = r[5].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
         let body_len: usize = r[6].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
 
         Ok(Self {
-            version: "0.1".to_string(),
+            version: "0.2".to_string(),
             command: r[2].clone(),
-            compression: r[3].clone(),
-            response_compression: r[4].split(|chr| chr == ',').map(|s| s.to_string()).collect(),
-            head_only_indicator: r.get(7) == Some(&"H".to_string()),
             headers: payload[0..headers_len].to_vec(),
             body: payload[headers_len..(headers_len + body_len)].to_vec(),
         })
     }
     pub fn marshal(&self) -> Vec<u8> {
-        let response_compression = &self.response_compression.join(",");
         let headers_len = self.headers.len().to_string();
         let body_len = self.body.len().to_string();
 
@@ -49,8 +42,6 @@ impl EWPRequest {
             "EWP",
             &self.version,
             &self.command,
-            &self.compression,
-            response_compression,
             &headers_len,
             &body_len
         ];
@@ -62,47 +53,6 @@ impl EWPRequest {
         let req_line = parts.join(" ") + "\n";
 
         let mut rval = req_line.into_bytes();
-        rval.extend(&self.headers);
-        rval.extend(&self.body);
-
-        rval
-    }
-}
-
-#[derive(Clone,Debug)]
-pub struct EWPResponse {
-    pub code: u16,
-    pub compression: String,
-    pub headers: Vec<u8>,
-    pub body: Vec<u8>,
-}
-impl EWPResponse {
-    pub fn parse(res: &[u8]) -> Result<Self, std::io::Error> {
-        let res_line_end_idx = res.iter().position(|b| *b == ('\n' as u8))
-            .ok_or_else(||
-                std::io::Error::new(std::io::ErrorKind::Other, "response newline terminator missing")
-            )
-        ?;
-        let res_line_raw = &res[..res_line_end_idx];
-        let payload = &res[(res_line_end_idx + 1)..];
-        let res_line: String = String::from_utf8(res_line_raw.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let r: Vec<String> = res_line.splitn(4, |chr| chr == ' ').map(|s| s.to_string()).collect();
-        let code = r[0].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let headers_len: usize = r[2].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let body_len: usize = r[3].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-
-        Ok(Self {
-            code,
-            compression: r[1].clone(),
-            headers: payload[0..headers_len].to_vec(),
-            body: payload[headers_len..(headers_len + body_len)].to_vec(),
-        })
-    }
-    pub fn marshal(&self) -> Vec<u8> {
-        let mut rval = vec![];
-        let req_line = format!("{} {} {} {}\n", self.code, self.compression, self.headers.len(), self.body.len());
-
-        rval.extend(req_line.as_bytes());
         rval.extend(&self.headers);
         rval.extend(&self.body);
 
@@ -122,12 +72,6 @@ fn main() {
         "request" => {
             let req = EWPRequest::parse(&buffer).expect("parse request failed");
             let marshalled = req.marshal();
-            let marshalled_str = unsafe { String::from_utf8_unchecked(marshalled) };
-            print!("{}", marshalled_str);
-        },
-        "response" => {
-            let res = EWPResponse::parse(&buffer).expect("parse response failed");
-            let marshalled = res.marshal();
             let marshalled_str = unsafe { String::from_utf8_unchecked(marshalled) };
             print!("{}", marshalled_str);
         },

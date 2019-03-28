@@ -16,7 +16,5 @@ stdin = sys.stdin.read(chars)
 
 if reqres == "request":
     print(req_marshal(req_parse(stdin)),end='')
-elif reqres == "response":
-    print(res_marshal(res_parse(stdin)),end='')
 else:
-    print("invalid request/response input")
+    print("invalid request input")
