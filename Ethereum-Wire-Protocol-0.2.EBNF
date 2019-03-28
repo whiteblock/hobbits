@@ -1,6 +1,6 @@
 envelope = info, lf, headers, body ;
 
-info = magic , sp , version , sp , command , sp , headers-len , sp , body-len , [ sp , head-only-indicator ];
+info = magic , sp , version , sp , envelope-kind , sp , headers-len , sp , body-len;
 
 magic = 'EWP' ;
 version = '0.2' ;
@@ -8,8 +8,8 @@ version = '0.2' ;
 headers-len = digit , { digit } ;
 body-len = digit , { digit } ;
 
-command = command-character , { command-character } ;
-command-character = uppercase-letter | digit | "_" ;
+envelope-kind = envelope-kind-character , { envelope-kind-character } ;
+envelope-kind-character = uppercase-letter | digit | "_" ;
 
 uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
        | "H" | "I" | "J" | "K" | "L" | "M" | "N"
@@ -17,8 +17,7 @@ uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
        | "V" | "W" | "X" | "Y" | "Z" ;
 digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 sp = " " ;
-head-only-indicator = "H" ;
 lf = "\n" ;
 
 headers = ? BSON HEADER DATA ? ;
-body = ? COMMAND-DEFINED ENTITY ? ;
+body = ? DATA PAYLOAD DEFINED BY envelope-kind elsewhere ? ;
