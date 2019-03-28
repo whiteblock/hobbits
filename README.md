@@ -7,7 +7,6 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 ### EWP 0.2
  - [EBNF Grammar](/Ethereum-Wire-Protocol-0.2.EBNF)
  - [Protocol](/protocol.md)
- - [Response Codes](/response-codes.md)
  
 ### ETH 2.0 Protocol
  - [Messages](/rpc-messages.md)
@@ -33,6 +32,7 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
  - [Bash](/parsers/bash)
 
 ### Full Implementations
+ - [Java](https://github.com/pegasyseng/artemis)
  - [Swift](https://github.com/yeeth/Hobbits.swift)
 
 ### Missing languages
