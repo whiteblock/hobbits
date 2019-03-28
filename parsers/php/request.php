@@ -13,12 +13,12 @@ class ewp_request{
         $this->proto = $given_request[0];
         $this->version = $given_request[1];
         $this->command = $given_request[2];
-        $this->header = substr($req_split[1],0,intval($given_request[5]));
-        $this->body = substr($req_split[1],intval($given_request[5]),intval($given_request[6]));
+        $this->header = substr($req_split[1],0,intval($given_request[3]));
+        $this->body = substr($req_split[1],intval($given_request[3]),intval($given_request[4]));
     }
 
     public function marshal(){
-        $out = $this->proto . " ". $this->version . " " . $this->command . " " . $this->compression .  " ";
+        $out = $this->proto . " ". $this->version . " " . $this->command;
         $out .= " ".strlen($this->header). " ".strlen($this->body);
         $out .= "\n".$this->header . $this->body;
         return $out;

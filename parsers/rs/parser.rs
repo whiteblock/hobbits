@@ -24,8 +24,8 @@ impl EWPRequest {
         let r: Vec<String> = req_line.splitn(8, |chr| chr == ' ').map(|s| s.to_string()).collect();
         assert!(&r[0] == "EWP");
         assert!(&r[1] == "0.2");
-        let headers_len: usize = r[5].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
-        let body_len: usize = r[6].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let headers_len: usize = r[3].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
+        let body_len: usize = r[4].parse().map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
 
         Ok(Self {
             version: "0.2".to_string(),
@@ -45,10 +45,6 @@ impl EWPRequest {
             &headers_len,
             &body_len
         ];
-
-        if self.head_only_indicator {
-            parts.push("H")
-        }
 
         let req_line = parts.join(" ") + "\n";
 

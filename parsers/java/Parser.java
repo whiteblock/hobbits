@@ -18,9 +18,6 @@ public final class Parser {
         private final String protocol;
         private final String version;
         private final String command;
-        private final String compression;
-        private final String encoding;
-        private final boolean headOnlyIndicator;
         private final String headers;
         private final String body;
 
@@ -28,17 +25,11 @@ public final class Parser {
         Request(String protocol,
           String version, 
           String command, 
-          String compression, 
-          String encoding, 
-          boolean headOnlyIndicator, 
           String headers, 
           String body) {
               this.protocol = protocol;
               this.command = command;
               this.version = version;
-              this.compression = compression;
-              this.encoding = encoding;
-              this.headOnlyIndicator = headOnlyIndicator;
               this.headers = headers;
               this.body = body;
         }
@@ -47,8 +38,7 @@ public final class Parser {
             StringBuilder builder = new StringBuilder();
             builder.append(protocol + " " +
              version + " " +
-              command + " " +
-               compression + " " + encoding);
+              command);
             if (headers == null) {
                 builder.append(" 0");
             } else {
@@ -58,9 +48,6 @@ public final class Parser {
                 builder.append(" 0");
             } else {
                 builder.append(" ").append(body.length());
-            }
-            if (headOnlyIndicator) {
-                builder.append(" H");
             }
             builder.append("\n");
             if (headers != null) {
@@ -86,32 +73,25 @@ public final class Parser {
         }
         String reqLine = str.substring(0, newline);
         String[] requestArguments = reqLine.split(" ");
-        if (requestArguments.length < 6) {
+        if (requestArguments.length < 5) {
             throw new IllegalArgumentException("Not enough elements in request line");
         }
         int headerLength = 0;
         int bodyLength = 0;
         try {
-          headerLength = Integer.parseInt(requestArguments[5]);
-          bodyLength = Integer.parseInt(requestArguments[6]);
+          headerLength = Integer.parseInt(requestArguments[3]);
+          bodyLength = Integer.parseInt(requestArguments[4]);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(e);
         }
         if (str.length() < newline + 1 + headerLength + bodyLength) {
             throw new IllegalArgumentException("Invalid length encoding");
         }
-        boolean headOnlyIndicator = requestArguments.length == 8 && "H".equals(requestArguments[7]);
         String headers = str.substring(newline + 1, newline + 1 + headerLength);
-        String body = null;
-        if (!headOnlyIndicator) {
-          body = str.substring(newline + 1 + headerLength, newline + 1 + headerLength + bodyLength);
-        }
+        String body = str.substring(newline + 1 + headerLength, newline + 1 + headerLength + bodyLength);
         return new Request(requestArguments[0], 
           requestArguments[1],
           requestArguments[2],
-          requestArguments[3],
-          requestArguments[4],
-          headOnlyIndicator,
           headers,
           body);
     }

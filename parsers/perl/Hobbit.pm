@@ -13,8 +13,8 @@ sub parse_request {
     my ($self, $req) = @_;
     my ($req_line, $payload) = ($req =~ /(.*?)\n(.*)/s);
     my @r = split(' ', $req_line);
-    my $headers_len = int $r[5];
-    my $body_len = int $r[6];
+    my $headers_len = int $r[3];
+    my $body_len = int $r[4];
     my $headers = substr $payload, 0, $headers_len;
     my $body = substr $payload, $headers_len, $body_len;
     return {
@@ -29,7 +29,7 @@ sub parse_request {
 sub marshal_request {
     my ($self, $req) = @_;
     my $request_line = sprintf(
-        "%s %s %s %s %s %d %d%s",
+        "%s %s %s %d %d%s",
         $req->{proto},
         $req->{version},
         $req->{command},

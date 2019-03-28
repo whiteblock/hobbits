@@ -23,8 +23,8 @@ func reqParse(req string) Request {
 	if len(r) < 8 {
 		r = append(r, " ")
 	}
-	headersLen, _ := strconv.Atoi(r[5])
-	bodyLen, _ := strconv.Atoi(r[6])
+	headersLen, _ := strconv.Atoi(r[3])
+	bodyLen, _ := strconv.Atoi(r[4])
 	headers := payload[0:headersLen]
 	body := payload[headersLen : headersLen+bodyLen]
 

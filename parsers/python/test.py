@@ -5,8 +5,6 @@ import sys
 from parser import (
     req_parse,
     req_marshal,
-    res_parse,
-    res_marshal,
 )
 
 reqres = sys.argv[1]
