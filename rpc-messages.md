@@ -73,7 +73,7 @@ EWP 0.2 RPC snappy bson 0 12
 }
 ```
 
-### `0x0B` BLOCK_ROOTS
+## `0x0B` BLOCK_ROOTS
 
 ```python
 [
