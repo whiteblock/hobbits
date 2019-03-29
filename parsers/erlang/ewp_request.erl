@@ -7,29 +7,10 @@
 -record(ewp_request,{
     proto,
     version,
-    command,
-    compression,
-    response_compression,
-    has_body = false,
+    envelope_kind,
     header,
     body
     }).
-%ewp_request:parse("EWP 0.1 PING none none 2 2 H\ntest").
-parse_compression(RespCompStr) ->
-    parse_compression(RespCompStr,[]).
-
-parse_compression(RespCompStr,Prog) ->
-
-    Index = string:str(RespCompStr,","),
-    if 
-        Index < 1 ->
-            [RespCompStr];
-        true ->
-
-        parse_compression(string:substr(RespCompStr,Index+1),[Prog|string:slice(RespCompStr,0,Index)])
-    end
-
-.
 
 parse(In) -> 
     Index = str(In,"\n"),
@@ -37,32 +18,26 @@ parse(In) ->
     RequestBody = string:substr(In,Index+1),
     Request = string:tokens(RequestLine," "),
     if
-        length(Request) < 7 ->
+        length(Request) < 5 ->
             exit("Not enough items");
         true ->
             ok
     end,
     Proto = lists:nth(1,Request),
     Version = lists:nth(2,Request),
-    Command = lists:nth(3,Request),
-    Compression = lists:nth(4,Request),
-    ResponseCompression = parse_compression(lists:nth(5,Request)),
-    HasBody = length(Request) == 7,
-    Header = string:slice(RequestBody,0,list_to_integer(lists:nth(6,Request))),
+    EnvelopeKind = lists:nth(3,Request),
+    Header = string:slice(RequestBody,0,list_to_integer(lists:nth(4,Request))),
     if
         length(Request) == 8 ->
             Body = "";
         true ->
-            Body = string:slice(RequestBody,list_to_integer(lists:nth(6,Request)),list_to_integer(lists:nth(7,Request)))
+            Body = string:slice(RequestBody,list_to_integer(lists:nth(4,Request)),list_to_integer(lists:nth(5,Request)))
             
     end,
     #ewp_request{
         proto = Proto,
         version = Version,
-        command = Command,
-        compression = Compression,
-        response_compression = ResponseCompression,
-        has_body = HasBody,
+        envelope_kind = EnvelopeKind,
         header = Header,
         body = Body
     }
@@ -71,30 +46,15 @@ parse(In) ->
 %ewp_request:marshal(ewp_request:parse("EWP 0.1 PING none none 2 2 H\ntest")).
 %ewp_request:marshal(ewp_request:parse("EWP 0.1 PING none none 2 2\ntest")).
 marshal(State)->
-    if 
-        State#ewp_request.has_body ->
-            binary_to_list(erlang:iolist_to_binary(io_lib:format("~s ~s ~s ~s ~s ~p ~p\n~s~s",[
-                State#ewp_request.proto,
-                State#ewp_request.version,
-                State#ewp_request.command,
-                State#ewp_request.compression,
-                lists:join(",",State#ewp_request.response_compression),
-                string:len(State#ewp_request.header),
-                string:len(State#ewp_request.body),
-                State#ewp_request.header,
-                State#ewp_request.body
-                ])));
-        true ->
-            binary_to_list(erlang:iolist_to_binary(io_lib:format("~s ~s ~s ~s ~s ~p ~p H\n~s~s",[
-                State#ewp_request.proto,
-                State#ewp_request.version,
-                State#ewp_request.command,
-                State#ewp_request.compression,
-                lists:join(",",State#ewp_request.response_compression),
-                string:len(State#ewp_request.header),
-                string:len(State#ewp_request.body),
-                State#ewp_request.header,
-                State#ewp_request.body
-                ])))
-    end
+   
+    binary_to_list(erlang:iolist_to_binary(io_lib:format("~s ~s ~s ~p ~p\n~s~s",[
+        State#ewp_request.proto,
+        State#ewp_request.version,
+        State#ewp_request.envelope_kind,
+        string:len(State#ewp_request.header),
+        string:len(State#ewp_request.body),
+        State#ewp_request.header,
+        State#ewp_request.body
+        ])))
+
 .
