@@ -30,7 +30,7 @@ namespace hobbit{
             
 
             auto request = explode(request_line,' ');
-            if(request.size() < 7){
+            if(request.size() < 5){
                 throw std::invalid_argument("Not enough parameters");
                 //Not enough parameters
             }
@@ -48,11 +48,13 @@ namespace hobbit{
 
         std::string marshal() const noexcept 
         {
-            std::string out = this->proto + " ";
-            out += this->version + " ";
-            out += this->command + " ";
+            std::string out = this->proto;
+            out += " " + this->version;
+            out += " " + this->command;
             out += " " + std::to_string(this->header.size());
             out += " " + std::to_string(this->body.size());
+            out += "\n";
+            out += this->header + this->body;
             return out;
         }
     };
