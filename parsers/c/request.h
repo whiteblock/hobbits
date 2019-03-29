@@ -25,7 +25,7 @@ int ewp_request_parse(char* in,struct ewp_request* req)
 
     vector request = explode(" ",request_line);
     //printf("%d\n",vector_length(request));
-    if(vector_length(request) < 7){
+    if(vector_length(request) < 5){
         vector_free(request);
         return 1;
         //Not enough parameters
