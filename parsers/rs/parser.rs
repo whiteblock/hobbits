@@ -38,7 +38,7 @@ impl EWPRequest {
         let headers_len = self.headers.len().to_string();
         let body_len = self.body.len().to_string();
 
-        let mut parts: Vec<&str> = vec![
+        let parts: Vec<&str> = vec![
             "EWP",
             &self.version,
             &self.command,

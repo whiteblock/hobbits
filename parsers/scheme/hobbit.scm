@@ -2,7 +2,7 @@
 (provide marshal-request parse-request)
 (define (parse-request-line rl)
   (let ([arr (string-split rl " ")])
-      (append (append (reverse (list-tail (reverse arr) (- (length arr) 4)))  (list (explode (string->list (list-ref arr 4)) #\,))) (list-tail arr 5)))
+     (list (list-ref arr 0) (list-ref arr 1) (list-ref arr 2) (string->number (list-ref arr 3)) (string->number (list-ref arr 4))))
 )
 (define list-index
         (lambda (e lst)
@@ -29,7 +29,7 @@
   (match (length lst)
     [0 ""]
     [1 (car lst)]
-    [_
+    [ _
       (string-append (string-append (car lst) delim) (arr-to-string (cdr lst) delim))]
     )
 )
@@ -46,29 +46,23 @@
   (let ([req-split (string-split request "\n" #:trim? #f #:repeat? #f)])
   (let ([req-line (parse-request-line (car req-split))])
    (let ([payload (if (equal? (length req-split) 1) "" (arr-to-string (cdr req-split) "\n")) ])
-    (let ([body-len (string->number (list-ref req-line 6))])
-      (let ([header-len (string->number (list-ref req-line 5))])
+    (let ([body-len (list-ref req-line 4)])
+      (let ([header-len (list-ref req-line 3)])
         (append
-          (reverse
-            (if (equal? 8 (length req-line)) (cdddr (reverse req-line)) (cddr (reverse req-line))))
-          (list
-            (and
-              (equal? 8 (length req-line))
-              (equal? "H" (list-ref req-line 7 )))
-            (substring payload 0 header-len)
-            (substring payload header-len (+ header-len body-len)))))))))
+             (reverse (cddr (reverse req-line)))
+             (list
+                (substring payload 0 header-len)
+                (substring payload header-len (+ header-len body-len)))
+                ))))))
 )
 
 (define (marshal-request request)
-   (string-append (arr-merge request " " 0  3)
-    (string-append " "
-     (string-append (arr-to-string (list-ref request 4) ",")
+   (string-append (arr-merge request " " 0  2)
       (string-append " "
-       (string-append (number->string (string-length (list-ref request 6)))
+       (string-append (number->string (string-length (list-ref request 3)))
         (string-append " "
-         (string-append (number->string (string-length (list-ref request 7)))
-          (string-append (if (list-ref request 5) " H" "" )
+         (string-append (number->string (string-length (list-ref request 4)))
            (string-append "\n"
-            (string-append (list-ref request 6) (list-ref request 7)))))))))))
-)
+            (string-append (list-ref request 3) (list-ref request 4)))))))))
+
 )
