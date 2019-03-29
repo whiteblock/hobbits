@@ -16,7 +16,7 @@ The message must contain the following headers:
 
 Example (showing the bson snappy data as json):
 
-```python
+```java
 EWP 0.2 GOSSIP 24 0
 {
   "method_id": 3,
