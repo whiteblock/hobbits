@@ -24,7 +24,7 @@ def req_parse(req):
     headers = payload[0:headersLen]
     body = payload[headersLen:bodyLen+headersLen]
 
-    request = Request(r[0],r[1],r[2],r[3],r[4],headers,body)
+    request = Request(r[0],r[1],r[2],headers,body)
     return request.__dict__
 
 def req_marshal(req):
