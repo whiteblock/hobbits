@@ -5,8 +5,8 @@ pushd c
 popd
 
 pushd clisp
-    clisp setup.lisp
-    clisp -i "~/quicklisp/setup.lisp" -i init.lisp -c hobbit.lisp
+    clisp setup.lisp || true
+    clisp -i "~/quicklisp/setup.lisp" -i init.lisp -c hobbit.lisp || true
 popd
 
 pushd cpp
