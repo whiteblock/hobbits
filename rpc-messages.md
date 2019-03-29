@@ -32,50 +32,65 @@ EWP 0.2 RPC snappy bson 0 12
 
 ## `0x00` HELLO
 
-```python
+Nodes can send `HELLO` messages to each other to exchange information on their status.
+
+
+```java
 {
-  'network_id': 'uint8'
-  'chain_id': 'uint8'
-  'latest_finalized_root': 'bytes32'
-  'latest_finalized_epoch': 'uint64'
-  'best_root': 'bytes32'
-  'best_slot': 'uint64'
+  'network_id': 'uint8' // the ID of the network (1 for mainnet, and some predefined number for a testnet)
+  'chain_id': 'uint8' // the ID of the chain (1 for ETH)
+  'latest_finalized_root': 'bytes32' // the hash of the latest finalized root
+  'latest_finalized_epoch': 'uint64' // the number of the latest finalized epoch
+  'best_root': 'bytes32' // the hash of the best root this node can offer
+  'best_slot': 'uint64' // the number of the best slot this node can offer
 }
 ```
 
 ## `0x01` GOODBYE
 
-```python
+Nodes may signal to other nodes that they are going away by sending a `GOODBYE` message.
+The reason given is optional. Reason codes are up to each client and should not be trusted.
+
+```java
 {
-  'reason': 'uint64'
+  'reason': 'uint64' // an optional reason code up to the client
 }
 
 ```
 
 ## `0x02` GET_STATUS
-```python
+
+Nodes may exchange metadata information using a `GET_STATUS` message.
+
+This information is useful to identify other nodes and clients and report that information to statistics services.
+
+```java
 {
-  'sha': 'bytes32'
-  'user_agent': 'bytes'
-  'timestamp': 'uint64'
+  'sha': 'bytes32' // the commit hash of the node
+  'user_agent': 'bytes' // the human readable name of the client, optionally with its version and other metadata
+  'timestamp': 'uint64' // the current time of the node in milliseconds since epoch
 }
 ```
 
 ## `0x0A` GET_BLOCK_ROOTS
 
-```python
+Nodes may request block roots from other nodes using the `GET_BLOCK_ROOTS` message.
+
+```java
 {
-  'start_root': 'bytes32'
-  'start_slot': 'uint64'
-  'max': 'uint64'
-  'skip': 'uint64'
-  'direction': 'uint8' # 0x01 is forward, 0x00 is backwards
+  'start_root': 'bytes32' // the root hash to start querying from
+  'start_slot': 'uint64' // the slot number to start querying from
+  'max': 'uint64' // the max number of elements to return
+  'skip': 'uint64' // the number of elements apart to pick from
+  'direction': 'uint8' // 0x01 is ascending, 0x00 is descending direction to query elements
 }
 ```
 
 ## `0x0B` BLOCK_ROOTS
 
-```python
+Nodes may provide block roots to other nodes using the `BLOCK_ROOTS` message, usually in response to a `GET_BLOCK_ROOTS` message.
+
+```java
 [
   {
     'block_root': 'bytes32', 
@@ -88,40 +103,45 @@ EWP 0.2 RPC snappy bson 0 12
 
 ## `0x0C` GET_BLOCK_HEADERS
 
-```python
+Nodes may request block headers from other nodes using the `GET_BLOCK_HEADERS` message.
+
+```java
 {
-  'start_root': 'bytes32'
-  'start_slot': 'uint64'
-  'max': 'uint64'
-  'skip': 'uint64'
-  'direction': 'uint8' # 0x01 is forward, 0x00 is backwards
+  'start_root': 'bytes32' // the root hash to start querying from
+  'start_slot': 'uint64' // the slot number to start querying from
+  'max': 'uint64' // the max number of elements to return
+  'skip': 'uint64' // the number of elements apart to pick from
+  'direction': 'uint8' // 0x01 is ascending, 0x00 is descending direction to query elements
 }
 ```
 
 ## `0x0D` BLOCK_HEADERS
 
-```python
+Nodes may provide block roots to other nodes using the `BLOCK_HEADERS` message, usually in response to a `GET_BLOCK_HEADERS` message.
+
+```java
   'headers': '[]BeaconBlockHeader'
 ```
 
-
 ## `0x0E`  GET_BLOCK_BODIES
 
-```python
-[
-  {
-    'start_root': 'bytes32'
-    'start_slot': 'uint64'
-    'max': 'uint64'
-    'skip': 'uint64'
-    'direction': 'uint8' # 0x01 is forward, 0x00 is backwards
-  }
-]
+Nodes may request block bodies from other nodes using the `GET_BLOCK_BODIES` message.
+
+```java
+{
+  'start_root': 'bytes32' // the root hash to start querying from
+  'start_slot': 'uint64' // the slot number to start querying from
+  'max': 'uint64' // the max number of elements to return
+  'skip': 'uint64' // the number of elements apart to pick from
+  'direction': 'uint8' // 0x01 is ascending, 0x00 is descending direction to query elements
+}
 ```
 
 ## `0x0F`  BLOCK_BODIES
 
-```python
+Nodes may provide block roots to other nodes using the `BLOCK_BODIES` message, usually in response to a `GET_BLOCK_BODIES` message.
+
+```java
 [
   {
       'randao_reveal': 'bytes96',
@@ -136,6 +156,28 @@ EWP 0.2 RPC snappy bson 0 12
   }
 ]
 ```
+
+# Lifecycle and message exchanges
+
+## Initial hello
+
+Upon discovering each other, nodes may exchange `HELLO` messages.
+
+Nodes may send `HELLO` to other peers when they exchange messages for the first time or when their state changes to let them know new blocks are available.
+
+Upon receiving a `HELLO` message, the node may reply with a `HELLO` message.
+
+## Status messages
+
+Any peer may provide information about their status and metadata to any other peer. Other peers may respond on a best effort basis, if at all.
+
+## Block and header messages
+
+Peers may request blocks and headers from other peers.
+
+Other peers may respond on a best effort basis with header and block data.
+
+There is no SLA for responding. Peers may request blocks repeatidly from the same peers.
 
 #### The following definitions are aligned to v0.5.0 of the Beacon Chain Spec:
 
