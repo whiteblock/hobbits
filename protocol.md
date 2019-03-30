@@ -27,7 +27,7 @@ A parsed message would look like this:
 | Field | Definition | Validity |
 |:------:|----------|:----:|
 | `version` | Defines the EWP version number e.g. `0.1` | `[0-9]+.[0-9]+` |
-| `protocol` | Defines the communication protocol | `(RPC|GOSSIP)` |
+| `protocol` | Defines the communication protocol | `(RPC\|GOSSIP)` |
 | `compression` | Defines the compression codec of the `header` and `body`, none can be specified. | `[a-z0-9_]+` |
 | `encoding` | Defines the encoding of the `header` and `body` | `[a-z0-9_]+` |
 | `header` | Defines the header which is a `BSON` payload, it is seperately encoded and compressed. | `BSON` payload |
