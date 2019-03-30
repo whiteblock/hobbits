@@ -30,6 +30,7 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
  - [Scheme](/parsers/scheme)
  - [Swift](/parsers/swift)
  - [Bash](/parsers/bash)
+ - [Ruby](/parsers/ruby)
 
 ### Full Implementations
  - [Java](https://github.com/pegasyseng/artemis)
@@ -38,7 +39,6 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 ### Missing languages
   * brainfuck
   * x86 asm
-  * ruby
   * ada
   * css3
  
