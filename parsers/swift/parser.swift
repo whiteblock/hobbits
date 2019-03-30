@@ -1,36 +1,51 @@
 import Foundation
 
-struct Request {
-    let version: String
-    let command: String
+struct Message {
+
+    let version: String // @todo Version type
+    let proto: String
+    let compression: String
+    let encoding: String
     let headers: [UInt8]
     let body: [UInt8]
 }
 
-func parse(request: String) -> Request {
+extension Message: CustomStringConvertible {
 
-    let result = request.split(separator: "\n")
-
-    let requestLine = result[0]
-    let payload = result[1]
-
-    var r = requestLine.split(separator: " ")
-    if r.count < 8 {
-        r.append(" ")
+    public var description: String {
+        return "EWP " + version
+            + " " + proto.rawValue
+            + " " + compression
+            + " " + encoding
+            + " " + String(headers.count)
+            + " " + String(body.count)
+            + "\n" + String(bytes: headers, encoding: .utf8)!
+            + String(bytes: body, encoding: .utf8)!
     }
-
-    let headersLength = Int(r[5])!
-    let bodyLength = Int(r[6])!
-
-    let headers = payload[..<payload.index(payload.startIndex, offsetBy: headersLength)]
-    let body = payload[payload.index(payload.startIndex, offsetBy: headersLength)..<payload.index(payload.startIndex, offsetBy: bodyLength)]
-
-    return Request(
-        version: String(r[1]),
-        command: String(r[2]),
-        headers: [UInt8](headers.utf8),
-        body: [UInt8](body.utf8)
-    )
 }
 
-print(parse(request: "EWP 0.2 PING 0 5\n12345"))
+extension Message {
+
+    init(serializedData input: String) {
+        var lines = input.split(separator: "\n")
+        if lines.count == 1 {
+            lines.append("")
+        }
+
+        let payload = lines[1]
+
+        var request = lines[0].split(separator: " ")
+        assert(request.count >= 7) // @todo exception handling
+        let headersLength = Int(request[5])!
+        let bodyLength = Int(request[6])!
+
+        version = String(request[1])
+        proto = String(request[2])
+        compression = String(request[3])
+        encoding = String(request[4])
+        headers = payload.substring(start: 0, end: headersLength).bytes
+        body = payload.substring(start: headersLength, end: bodyLength).bytes
+    }
+}
+
+print(Message(serializedData: "EWP 0.2 RPC none json 0 25\n{'id':1,'method_id':0x00}"))
