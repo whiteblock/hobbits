@@ -1,41 +1,41 @@
 # EWP (Ethereum Wire Protocol)
 
-## types
+## Messages
 
-### `message`
+The message type both defines the `request` and `response` as they are identical. The `message` format is the following: 
+
+```
+EWP <version> <protocol> <compression> <encoding> <headers-length> <body-length>
+<header><body>
+```
+
+A parsed message would look like this:
 
 ```python
 {
-    'protocol': 'string'
     'version': 'string',
+    'protocol': 'string'
     'compression': 'string',
     'encoding': 'string',
-    'head_only_indicator': 'bool',
     'headers': 'bytes',
     'body': 'bytes'
 }
 ```
 
-## command
-may contain any uppercase letter or digit or _  to describe the command
+| Field | Definition | Validity |
+|:------:|----------|------|
+| `version` | Defines the EWP version number e.g. `0.1` | Any number and `.` |
+| `protocol` | Defines the communication protocol e.g. `RPC` or `GOSSIP` | Any uppercase letter or digit or _ |
+| `compression` | Defines the compression codec of the `header` and `body`, none can be specified. | lowercase letters or digits or _ |
+| `encoding` | Defines the encoding of the `header` and `body` | lowercase letters or digits or _ |
+| `header` | Defines the header which is a `BSON` payload, it is seperately encoded and compressed. | `BSON` payload |
+| `body` | Defines the body which is a `BSON` payload, it is seperately encoded and compressed. | `BSON` payload |
 
-## compression
-the compression field is describing the compression codec of the request headers & body in all lowercase letters or digits or _
-
-none can be specified to indicate no compression is to be used on the header or body data.
-
-## encoding
-
-the encoding field describes the encoding used by the headers and body in all lowercase letters or digits or _
-
-## headers and body
-headers and body are both BSON data payloads which are separately compressed and encoded -- the idea is to keep the headers lightweight so packets can be partially processed without having to decode the whole body in every case.
-
-## examples
+### Examples
 
 example of a wire protocol message
 
-### RPC call example with ping
+#### RPC call example with ping
 ```
 # Request (RPC call with a body of a RPC ping call)
 EWP 0.2 RPC none json 0 26
@@ -47,7 +47,7 @@ EWP 0.2 RPC none json 0 26
 
 ```
 
-### RPC call with payload
+#### RPC call with payload
 ```
 # Request (empty headers, bson body)
 EWP 0.2 RPC deflate bson 0 1234
@@ -65,7 +65,7 @@ EWP 0.1 RPC none none 321 1234
 200 none 0 0\n
 ```
 
-### Gossip
+#### Gossip
 ```
 # Request (Gossip call with a header with a message hash)
 EWP 0.2 GOSSIP none json 34 0
@@ -77,7 +77,7 @@ EWP 0.2 GOSSIP snappy bson 25 1234
 <1234 bytes of snappy compressed binary bson body data>
 ```
 
-# URI designation
+## URI designation
 
 We use the following URI schemes for hobbits URIs:
 
