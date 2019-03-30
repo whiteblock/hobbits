@@ -40,13 +40,12 @@ example of a wire protocol message
 #### RPC call example with ping
 ```
 # Request (RPC call with a body of a RPC ping call)
-EWP 0.2 RPC none json 0 26
+EWP 0.2 RPC none json 0 25
 {"id":1,"method_id":0x00}
 
 # Response
-EWP 0.2 RPC none json 0 26
+EWP 0.2 RPC none json 0 25
 {"id":1,"method_id":0x01}
-
 ```
 
 #### RPC call with payload
@@ -70,7 +69,7 @@ EWP 0.1 RPC none none 321 1234
 #### Gossip
 ```
 # Request (Gossip call with a header with a message hash)
-EWP 0.2 GOSSIP none json 34 0
+EWP 0.2 GOSSIP none json 33 0
 "001322323232232932232322232327f"
 
 # Request (Gossip call with a full block)
