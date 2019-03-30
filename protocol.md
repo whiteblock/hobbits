@@ -22,6 +22,8 @@ A parsed message would look like this:
 }
 ```
 
+### Fields
+
 | Field | Definition | Validity |
 |:------:|----------|------|
 | `version` | Defines the EWP version number e.g. `0.1` | Any number and `.` |
