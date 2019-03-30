@@ -5,7 +5,7 @@ These messages define a RPC protocol for clients to interact with each other.
 
 # Envelope
 
-All messages follow the envelope standard to Hobbits as described in [protocol.md].
+All messages follow the envelope standard to Hobbits as described in the [protocol definition](/protocol.md).
 
 This application protocol is classified under the `RPC` command.
 
