@@ -41,12 +41,20 @@ A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
   * ruby
   * ada
   * css3
+
+## Setup
+
+```bash
+sh setup.sh
+```
  
 ## Running Tests
 
 ```
 python test/run.py
 ```
+> Note: This chicken shit python test runner is written in python 2.
+
 
 Basic [benchmark results](https://gist.github.com/prestonvanloon/6663510164f967fa05553ead157cd5c1) against Protobuf. 
 
