@@ -7,7 +7,7 @@ import (
 )
 
 func porter() {
-	ln, err := net.Listen("tcp", ip+":"+port)
+	ln, err := net.Dial("tcp", ip+":"+port)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Test failed. Port %q: %s unavailable.", port, err)
