@@ -13,6 +13,7 @@ func pinger() {
 		fmt.Printf("ERROR: %s\n", err.Error())
 		return
 	}
+	pinger.SetPrivileged(true)
 	fmt.Println("Starting Ping Test....")
 
 	pinger.OnRecv = func(pkt *ping.Packet) {
