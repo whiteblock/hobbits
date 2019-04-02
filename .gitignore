@@ -18,3 +18,11 @@ parsers/scheme/compiled/
 parsers/scheme/hobbit.scm~
 parsers/scheme/test
 parsers/scheme/test.scm~
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
