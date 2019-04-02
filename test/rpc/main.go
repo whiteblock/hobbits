@@ -20,6 +20,6 @@ func main() {
 	pinger()
 	fmt.Println("Ping test passed. Testing port...")
 	porter()
-	fmt.Printf("Port test passed. Testing message delivery...", port)
+	fmt.Printf("Port test passed. Testing message delivery...")
 
 }
