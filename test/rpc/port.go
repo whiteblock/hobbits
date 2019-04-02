@@ -1,9 +1,10 @@
 package main
 
-import "net"
-import "fmt"
-
-import "os"
+import (
+	"fmt"
+	"net"
+	"os"
+)
 
 func porter() {
 	ln, err := net.Listen("tcp", ip+":"+port)
