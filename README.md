@@ -2,6 +2,8 @@
 
 A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
 
+Hobbits is a modular wire protocol which allows implementers to experiment with various application logic over a practical network in an agnostic and expedient manner.   
+
 ## Specifications
 
 ### EWP 0.2
