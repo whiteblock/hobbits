@@ -21,5 +21,4 @@ func porter() {
 	}
 
 	fmt.Printf("TCP Port %q is available", port)
-	os.Exit(0)
 }
