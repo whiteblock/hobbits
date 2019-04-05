@@ -78,23 +78,3 @@ EWP 0.2 GOSSIP snappy bson 25 1234
 <1234 bytes of snappy compressed binary bson body data>
 ```
 
-## URI designation
-
-We use the following URI schemes for hobbits URIs:
-
-| Secure connection | Type of connection | Scheme   |
-| ----------------- | ------------------ | -------- |
-| Insecure          | TCP                | hob+tcp  |
-| Insecure          | UDP                | hob+udp  |
-| Secure            | TCP                | hobs+tcp |
-| Secure            | UDP                | hobs+udp |
-
-Example:
-
-```
-hob+tcp://10.0.0.1:9000 // Insecure TCP
-hob+udp://10.0.0.1:9000 // Insecure UDP
-
-hobs+tcp://10.0.0.1:9000 // Secure TCP
-hobs+udp://10.0.0.1:9000 // Secure UDP 
-```
