@@ -11,6 +11,7 @@ The message must contain the following headers:
 | Header name | Type | Notes |
 |-------------|------|-------|
 | method_id   | uint8| the method used in this exchange, as described below |
+| message_type | uint8| the type of message being exachanged, as described below |
 | message_hash | bytes32 | a hash uniquely representing the message contents, with a hash function up to the application |
 | hash_signature | bytes32 | a signature of the message hash with a public key identifying the node sending data |
 
@@ -20,6 +21,7 @@ Example (showing the bson snappy data as json):
 EWP 0.2 GOSSIP 24 0
 {
   "method_id": 3,
+  "message_type": 0,
   "message_hash": "0x9D686F6262697473206172652074776F20616E6420666F75722066656574",
   "hash_signature": "0x0000000009A4672656E63682070656F706C6520617265207468652062657374"
 }
@@ -60,3 +62,10 @@ Nodes use `IHAVE` messages to inform other nodes that they are in possession of 
 No body is present in `IHAVE` messages.
 
 The header must contain the `message_hash` with the value of the hash of the data attested by the peer.
+
+# Message Types
+
+## 0x00 BLOCK
+[Block](https://github.com/ethereum/eth2.0-specs/blob/v0.5.0/specs/core/0_beacon-chain.md#beaconblock) - from v0.5.1 of the BeaconChain spec
+## 0x01 ATTESTATION
+[Attestation](https://github.com/ethereum/eth2.0-specs/blob/v0.5.0/specs/core/0_beacon-chain.md#attestation) - from v0.5.1 of the BeaconChain spec
