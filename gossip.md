@@ -1,6 +1,10 @@
 # Messages
 These messages are used to define a gossip protocol for Ethereum 2.0. These messages define a gossip protocol for clients to replicate information with each other.
 
+# Serialization and compression
+
+All messages of the command GOSSIP use SSZ serialization and snappy compression.
+
 # Envelope
 All messages follow the envelope standard to Hobbits as described in [protocol.md].
 
@@ -15,7 +19,7 @@ The message must contain the following headers:
 | message_hash | bytes32 | a hash uniquely representing the message contents, with a hash function up to the application |
 | hash_signature | bytes32 | a signature of the message hash with a public key identifying the node sending data |
 
-Example (showing the bson snappy data as json):
+Example (showing the ssz snappy data as json):
 
 ```java
 EWP 0.2 GOSSIP 24 0
@@ -26,6 +30,8 @@ EWP 0.2 GOSSIP 24 0
   "hash_signature": "0x0000000009A4672656E63682070656F706C6520617265207468652062657374"
 }
 ```
+
+The message may contain additional headers specified by the application layer.
 
 # Methods
 
@@ -64,6 +70,8 @@ No body is present in `IHAVE` messages.
 The header must contain the `message_hash` with the value of the hash of the data attested by the peer.
 
 # Message Types
+
+GOSSIP allows to gossip different types of payloads. To differentiate them, it uses a header `message_type`.
 
 ## 0x00 BLOCK
 [Block](https://github.com/ethereum/eth2.0-specs/blob/v0.5.0/specs/core/0_beacon-chain.md#beaconblock) - from v0.5.1 of the BeaconChain spec
