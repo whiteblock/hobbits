@@ -14,7 +14,6 @@ We use the following URI schemes for hobbits URIs:
 | Insecure          | UDP                | hob+udp   |
 | TLS               | TCP                | hob+tls   |
 | TLS               | UDP                | hobs+dtls |
-| RLPx              | Persistent TCP     | hob+rlpx  |
 | Insecure          | HTTP               | hob+http  |
 | TLS               | HTTPs              | hob+https |
 | TLS               | Web socket         | hob+ws    |

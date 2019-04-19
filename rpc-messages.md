@@ -5,9 +5,9 @@ These messages define a RPC protocol for clients to interact with each other.
 
 # Envelope
 
-All messages follow the envelope standard to Hobbits as described in the [protocol definition](/protocol.md).
-
 This application protocol is classified under the `RPC` command.
+
+All messages of the command RPC use BSON serialization and snappy compression.
 
 The body of the RPC calls must conform to:
 ```
@@ -20,15 +20,17 @@ The body of the RPC calls must conform to:
 
 Example (showing the bson snappy data as json):
 ```
-EWP 0.2 RPC snappy bson 0 12
+EWP 0.2 RPC 0 12
 {
-  "method_id": 0x00,
+  "method_id": 0x01,
   "id": 1,
   "body": {
     "reason": 42
   }
 }
 ```
+
+The message may contain additional headers specified by the application layer.
 
 ## `0x00` HELLO
 
@@ -66,48 +68,18 @@ This information is useful to identify other nodes and clients and report that i
 
 ```java
 {
-  'sha': 'bytes32' // the commit hash of the node
   'user_agent': 'bytes' // the human readable name of the client, optionally with its version and other metadata
   'timestamp': 'uint64' // the current time of the node in milliseconds since epoch
 }
 ```
 
-## `0x0A` GET_BLOCK_ROOTS
-
-Nodes may request block roots from other nodes using the `GET_BLOCK_ROOTS` message.
-
-```java
-{
-  'start_root': 'bytes32' // the root hash to start querying from
-  'start_slot': 'uint64' // the slot number to start querying from
-  'max': 'uint64' // the max number of elements to return
-  'skip': 'uint64' // the number of elements apart to pick from
-  'direction': 'uint8' // 0x01 is ascending, 0x00 is descending direction to query elements
-}
-```
-
-## `0x0B` BLOCK_ROOTS
-
-Nodes may provide block roots to other nodes using the `BLOCK_ROOTS` message, usually in response to a `GET_BLOCK_ROOTS` message.
-
-```java
-[
-  {
-    'block_root': 'bytes32', 
-    'slot': 'uint64'
-  },
-  ...
-]
-```
-
-
-## `0x0C` GET_BLOCK_HEADERS
+## `0x0A` GET_BLOCK_HEADERS
 
 Nodes may request block headers from other nodes using the `GET_BLOCK_HEADERS` message.
 
 ```java
 {
-  'start_root': 'bytes32' // the root hash to start querying from
+  'start_root': 'bytes32' // the root hash to start querying from OR
   'start_slot': 'uint64' // the slot number to start querying from
   'max': 'uint64' // the max number of elements to return
   'skip': 'uint64' // the number of elements apart to pick from
@@ -115,7 +87,9 @@ Nodes may request block headers from other nodes using the `GET_BLOCK_HEADERS` m
 }
 ```
 
-## `0x0D` BLOCK_HEADERS
+The request should contain either a `start_root` or `start_slot` parameter.
+
+## `0x0B` BLOCK_HEADERS
 
 Nodes may provide block roots to other nodes using the `BLOCK_HEADERS` message, usually in response to a `GET_BLOCK_HEADERS` message.
 
@@ -123,13 +97,13 @@ Nodes may provide block roots to other nodes using the `BLOCK_HEADERS` message, 
   'headers': '[]BeaconBlockHeader'
 ```
 
-## `0x0E`  GET_BLOCK_BODIES
+## `0x0C`  GET_BLOCK_BODIES
 
 Nodes may request block bodies from other nodes using the `GET_BLOCK_BODIES` message.
 
 ```java
 {
-  'start_root': 'bytes32' // the root hash to start querying from
+  'start_root': 'bytes32' // the root hash to start querying from OR
   'start_slot': 'uint64' // the slot number to start querying from
   'max': 'uint64' // the max number of elements to return
   'skip': 'uint64' // the number of elements apart to pick from
@@ -137,7 +111,9 @@ Nodes may request block bodies from other nodes using the `GET_BLOCK_BODIES` mes
 }
 ```
 
-## `0x0F`  BLOCK_BODIES
+The request should contain either a `start_root` or `start_slot` parameter.
+
+## `0x0D`  BLOCK_BODIES
 
 Nodes may provide block roots to other nodes using the `BLOCK_BODIES` message, usually in response to a `GET_BLOCK_BODIES` message.
 
