@@ -66,34 +66,37 @@ public final class Parser {
      * @return the request
      * @throws IllegalArgumentException if the string doesn't match the EWP spec.
      */
-    public static final Request parseRequest(String str) {
-        int newline = str.indexOf('\n');
-        if (newline == -1) {
+    public static Request parseRequest(String str) {
+        final int newlineIdx = str.indexOf('\n');
+        if (newlineIdx < 0) {
             throw new IllegalArgumentException("No new line found");
         }
-        String reqLine = str.substring(0, newline);
+        String reqLine = str.substring(0, newlineIdx);
         String[] requestArguments = reqLine.split(" ");
         if (requestArguments.length < 5) {
             throw new IllegalArgumentException("Not enough elements in request line");
         }
-        int headerLength = 0;
-        int bodyLength = 0;
+        final int startHeaders = newlineIdx + 1;
+        final int endHeaders;
+        final int endBody;
         try {
-          headerLength = Integer.parseInt(requestArguments[3]);
-          bodyLength = Integer.parseInt(requestArguments[4]);
+            int headerLength = Integer.parseUnsignedInt(requestArguments[3]);
+            int bodyLength = Integer.parseUnsignedInt(requestArguments[4]);
+            endHeaders = startHeaders + headerLength;
+            endBody = endHeaders + bodyLength;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(e);
         }
-        if (str.length() < newline + 1 + headerLength + bodyLength) {
+        if (str.length() < endBody) {
             throw new IllegalArgumentException("Invalid length encoding");
         }
-        String headers = str.substring(newline + 1, newline + 1 + headerLength);
-        String body = str.substring(newline + 1 + headerLength, newline + 1 + headerLength + bodyLength);
-        return new Request(requestArguments[0], 
-          requestArguments[1],
-          requestArguments[2],
-          headers,
-          body);
+        return new Request(
+                requestArguments[0],
+                requestArguments[1],
+                requestArguments[2],
+                str.substring(startHeaders, endHeaders), // headers
+                str.substring(endHeaders, endBody) // body
+        );
     }
 
     public static void main(String[] args) throws IOException {
