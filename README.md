@@ -1,3 +1,8 @@
+# THIS REPOSITORY HAS MOVED.
+
+Hobbits has been adopted by the [DeltaP2P Foundation](https://github.com/deltap2p/hobbits) where it is now being maintained.
+
+
 # Hobbits, or There and Back Again
 
 A Lightweight, Multiclient Wire Protocol For ETH2.0 Communications
