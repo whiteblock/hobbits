@@ -17,7 +17,7 @@ A parsed message would look like this:
     'protocol': 'string'
     'compression': 'string',
     'encoding': 'string',
-    'headers': 'bytes',
+    'header': 'bytes',
     'body': 'bytes'
 }
 ```
