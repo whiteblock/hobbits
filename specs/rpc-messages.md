@@ -153,7 +153,7 @@ Peers may request blocks and headers from other peers.
 
 Other peers may respond on a best effort basis with header and block data.
 
-There is no SLA for responding. Peers may request blocks repeatidly from the same peers.
+There is no SLA for responding. Peers may request blocks repeatedly from the same peers.
 
 #### The following definitions are aligned to v0.5.0 of the Beacon Chain Spec:
 
