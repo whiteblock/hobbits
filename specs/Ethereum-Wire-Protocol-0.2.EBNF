@@ -1,6 +1,6 @@
 envelope = info, lf, headers, body ;
 
-info = magic , sp , version , sp , command , sp , headers-len , sp , body-len;
+info = magic , sp , version , sp , protocol , sp , headers-len , sp , body-len;
 
 magic = 'EWP' ;
 version = '0.2' ;
@@ -8,8 +8,8 @@ version = '0.2' ;
 headers-len = digit , { digit } ;
 body-len = digit , { digit } ;
 
-command = command-character , { command-character } ;
-command-character = uppercase-letter | digit | "_" | "/";
+protocol = protocol-character , { command-character } ;
+protocol-character = uppercase-letter | digit | "_" | "/";
 
 uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
        | "H" | "I" | "J" | "K" | "L" | "M" | "N"
@@ -20,4 +20,4 @@ sp = " " ;
 lf = "\n" ;
 
 headers = ? BSON HEADER DATA ? ;
-body = ? DATA PAYLOAD DEFINED BY command ? ;
+body = ? DATA PAYLOAD DEFINED BY protocol ? ;
