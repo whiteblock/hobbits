@@ -25,4 +25,4 @@ parsers/scheme/test.scm~
 *.dylib
 *.test
 *.out
-
+test/conformance/conformance

@@ -12,7 +12,7 @@ var (
 )
 
 func main() {
-	pflag.StringVarP(&ip, "ip", "i", "10.1.0.2", "ip address")
+	pflag.StringVarP(&ip, "ip", "i", "localhost", "ip address")
 	pflag.StringVarP(&port, "port", "p", "9000", "port")
 
 	pflag.Parse()
@@ -21,5 +21,6 @@ func main() {
 	fmt.Println("Ping test passed. Testing port...")
 	porter()
 	fmt.Printf("Port test passed. Testing message delivery...")
-
+	messager()
+	fmt.Printf("Message delivery passed.")
 }
